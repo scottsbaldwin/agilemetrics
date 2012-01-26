@@ -1,0 +1,30 @@
+<% if @team.sprints.size > 0 %>
+<table class="sprints">
+<thead>
+<tr>
+<th class="sprintInfo" colspan="6">Sprint Info</th>
+<th class="actuals" colspan="6">Actuals</th>
+<th rowspan="2" colspan="3">Actions</th>
+</tr>
+
+<tr>
+<th class="sprintInfo">Name</th>
+<th class="sprintInfo">End Date</th>
+<th class="sprintInfo">Team Size</th>
+<th class="sprintInfo">Working Days</th>
+<th class="sprintInfo">PTO/OOO Days</th>
+<th class="sprintInfo">Effective Team Size</th>
+
+<th class="actuals">Planned Velocity</th>
+<th class="actuals">Actual Velocity</th>
+<th class="actuals">Adopted</th>
+<th class="actuals">Unplanned</th>
+<th class="actuals">Found</th>
+<th class="actuals">Partial</th>
+</tr>
+</thead>
+<tbody>
+<%= render @team.sprints %>
+</tbody>
+</table>
+<% end %>

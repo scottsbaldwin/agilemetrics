@@ -1,0 +1,133 @@
+<p id="notice"><%= notice %></p>
+<h1><%= @team.name %></h1>
+
+<p>
+  <b>Length of sprint:</b>
+  <%= pluralize(@team.sprint_weeks, "week") %>
+</p>
+
+
+<%= link_to 'Edit', edit_team_path(@team) %> |
+<%= link_to 'Back', teams_path %>
+
+<% if @summary_sprint != nil %>
+<h2>Summary</h2>
+<div id="summary">
+	<%= render "sprints/summary" %>
+</div>
+<div id="charts">
+    <script type="text/javascript">
+      function drawVisualization() {
+
+		var velocityChart = {
+          chartType: 'LineChart',
+          dataTable: [['', 'Actual Velocity', 'Committed Velocity', 'Avg Velocity', 'Capacity'],
+					<% last_n_sprints(@team.sprints, 10).each do |sprint| 
+							if sprint_is_complete?(sprint)
+					%>
+                      ['<%= sprint.sprint_name %>', <%= sprint.actual_velocity %>, <%= committed_velocity(sprint) %>, <%= average_velocity(@team.sprints, sprint, 6) %>, <%= capacity(sprint) %>],
+					<% 		end 
+						end
+					%>
+			],
+          options: {'title': 'Velocity Trend', 
+					curveType: "function", 
+					vAxis: { gridlines: { count: 6 }, minValue: 0 },
+					titleTextStyle: { fontSize: 14 },
+					series: {
+						0: { lineWidth: 3, pointSize: 6, color: 'LimeGreen' },
+						1: { lineWidth: 3, pointSize: 6, color: 'Red' },
+						2: { lineWidth: 1, pointSize: 2, color: 'MediumPurple' },
+						3: { lineWidth: 1, pointSize: 2, color: 'CornflowerBlue' }
+					},
+					theme: 'maximized'},
+          containerId: 'velocityTrend'
+        };
+
+		var efficiencyChart = {
+          chartType: 'LineChart',
+          dataTable: [['', 'Actual Velocity Increase Factor', 'Velocity Efficiency Increase Factor', 'Baseline', 'Hyper Performing'],
+					<% last_n_sprints(@team.sprints, 10).each do |sprint| 
+							if sprint_is_complete?(sprint)
+					%>
+                      ['<%= sprint.sprint_name %>', <%= velocity_index(sprint, @first_sprint) %>, <%= velocity_efficiency(sprint, @first_sprint) %>, 1, 3],
+					<% 		end 
+						end
+					%>
+			],
+          options: {'title': 'Efficiency Trend',
+					curveType: "function", 
+					vAxis: { gridlines: { count: 15 }, minValue: -1, maxValue: 5 },
+					titleTextStyle: { fontSize: 14 },
+					series: {
+						0: { lineWidth: 3, pointSize: 6, color: 'MediumPurple' },
+						1: { lineWidth: 3, pointSize: 6, color: 'CornflowerBlue' },
+						2: { visibleInLegend: false, lineWidth: 1, pointSize: 0, color: 'Red' },
+						3: { visibleInLegend: false, lineWidth: 1, pointSize: 0, color: 'Green' }
+					},
+					theme: 'maximized'},
+          containerId: 'efficiencyTrend'
+        };
+
+		var processChart = {
+          chartType: 'LineChart',
+          dataTable: [['', 'Commitment Accuracy', 'Estimation Accuracy', 'Focus Factor', 'Unplanned', 'Unplanned Tolerance', 'Upper Tolerance'],
+					<% last_n_sprints(@team.sprints, 10).each do |sprint| 
+							if sprint_is_complete?(sprint)
+					%>
+                      ['<%= sprint.sprint_name %>', <%= commitment_accuracy(sprint) %>, <%= estimation_accuracy(sprint) %>, <%= focus_factor(sprint) %>, <%= unplanned_work_percent(sprint) %>, 20, 80],
+					<% 		end 
+						end
+					%>
+/*
+                      ['2011.11.25', 76, 88, 85, 0, 20, 80],
+                      ['2011.12.07', 79, 92, 88, 0, 20, 80],
+                      ['2011.12.21', 83, 95, 96, 5, 20, 80],
+                      ['2012.01.11', 88, 93, 93, 8, 20, 80],
+                      ['2012.01.25', 85, 89, 94, 0, 20, 80]
+*/
+			],
+          options: {'title': 'Process Metrics Trend',
+					curveType: "function", 
+					vAxis: { gridlines: { count: 14 }, minValue: -10, maxValue: 120 },
+					titleTextStyle: { fontSize: 14 },
+					series: {
+						0: { lineWidth: 3, pointSize: 6, color: 'CornflowerBlue' },
+						1: { lineWidth: 3, pointSize: 6, color: 'Orange' },
+						2: { lineWidth: 2, pointSize: 6, color: 'MediumPurple' },
+						3: { lineWidth: 1, pointSize: 6, color: 'Green' },
+						4: { visibleInLegend: false, lineWidth: 1, pointSize: 0, color: 'red' },
+						5: { visibleInLegend: false, lineWidth: 1, pointSize: 0, color: 'red' }
+					},
+					theme: 'maximized'},
+          containerId: 'processTrend'
+        };
+
+        var velocityWrapper = new google.visualization.ChartWrapper(velocityChart);
+        velocityWrapper.draw();
+        var efficiencyWrapper = new google.visualization.ChartWrapper(efficiencyChart);
+        efficiencyWrapper.draw();
+        var processWrapper = new google.visualization.ChartWrapper(processChart);
+        processWrapper.draw();
+      }
+      google.setOnLoadCallback(drawVisualization);
+    </script>
+	<table width="100%">
+		<tr>
+		<td width="50%"><div id="velocityTrend"></div></td>
+		<td width="50%"><div id="efficiencyTrend"></div></td>
+		</tr>
+		<tr>
+		<td colspan="2"><div id="processTrend"></div></td>
+		</tr>
+	</table>
+</div>
+<div class="clear"></div>
+<% end %>
+
+<h2>Sprints</h2>
+<% if @team.sprints.size > 5 %>
+<p><%= link_to "Add a Sprint", new_team_sprint_path(@team), :class => "button"  %></p>
+<% end %>
+<%= render "teams/sprintlist" %>
+<p><%= link_to "Add a Sprint", new_team_sprint_path(@team), :class => "button"  %></p>

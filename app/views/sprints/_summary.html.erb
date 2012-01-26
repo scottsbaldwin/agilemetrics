@@ -1,0 +1,73 @@
+<%
+if @summary_sprint != nil
+%>
+<table>
+<thead>
+<tr>
+<th colspan="2"><%= @summary_sprint.sprint_name %></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Planned</td>
+<td class="alignNumber"><%= @summary_sprint.planned_velocity %></td>
+</tr>
+
+<tr>
+<td>Adopted</td>
+<td class="alignNumber"><%= @summary_sprint.adopted_points %></td>
+</tr>
+
+<tr>
+<td>Found</td>
+<td class="alignNumber"><%= @summary_sprint.found_points %></td>
+</tr>
+
+<tr>
+<td>Unplanned</td>
+<td class="alignNumber"><%= @summary_sprint.unplanned_points %></td>
+</tr>
+
+<tr>
+<td>Committed Velocity</td>
+<td class="alignNumber"><%= committed_velocity(@summary_sprint) %></td>
+</tr>
+
+<tr>
+<td>Actual Velocity</td>
+<td class="alignNumber"><%= @summary_sprint.actual_velocity %></td>
+</tr>
+
+<tr>
+<td>Capacity</td>
+<td class="alignNumber"><%= capacity(@summary_sprint) %></td>
+</tr>
+
+<tr>
+<td>Focus Factor</td>
+<td class="alignNumber"><%= number_to_percentage(focus_factor(@summary_sprint), :precision => 0) %></td>
+</tr>
+
+<tr>
+<td>Commitment Accuracy</td>
+<td class="alignNumber"><%= number_to_percentage(commitment_accuracy(@summary_sprint), :precision => 0) %></td>
+</tr>
+
+<tr>
+<td>Estimation Accuracy</td>
+<td class="alignNumber"><%= number_to_percentage(estimation_accuracy(@summary_sprint), :precision => 0) %></td>
+</tr>
+
+<tr>
+<td>Unplanned Work %</td>
+<td class="alignNumber"><%= number_to_percentage(unplanned_work_percent(@summary_sprint), :precision => 0) %></td>
+</tr>
+
+<tr>
+<td>Velocity Efficiency Factor</td>
+<td class="alignNumber"><%= velocity_efficiency(@summary_sprint, @first_sprint) %></td>
+</tr>
+</tbody>
+</table>
+<% end %>
+

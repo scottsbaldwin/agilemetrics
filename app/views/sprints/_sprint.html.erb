@@ -1,0 +1,19 @@
+	<tr>
+	<td><%= sprint.sprint_name %></td>
+	<td><%= sprint.end_date %></td>
+	<td class="alignNumber"><%= sprint.team_size %></td>
+	<td class="alignNumber"><%= sprint.working_days %></td>
+	<td class="alignNumber"><%= sprint.pto_days %></td>
+	<td class="alignNumber effectiveTeamSize"><%= effective_team_size(sprint) %></td>
+
+	<td class="alignNumber"><%= sprint.planned_velocity %></td>
+	<td class="alignNumber"><%= sprint.actual_velocity %></td>
+	<td class="alignNumber"><%= sprint.adopted_points %></td>
+	<td class="alignNumber"><%= sprint.unplanned_points %></td>
+	<td class="alignNumber"><%= sprint.found_points %></td>
+	<td class="alignNumber"><%= sprint.partial_points %></td>
+
+    <td><%= link_to 'Show', team_sprint_path(sprint.team, sprint) %></td>
+    <td><%= link_to 'Edit', edit_team_sprint_path(sprint.team, sprint) %></td>
+	<td><%= link_to "Destroy", [sprint.team, sprint], :confirm => 'Are you sure?', :method => :delete %></td>
+	</tr>

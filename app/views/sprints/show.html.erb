@@ -1,0 +1,71 @@
+<p id="notice"><%= notice %></p>
+<h1><%= @sprint.team.name %> :: <%= @sprint.sprint_name %></h1>
+
+<%= link_to 'Edit', edit_team_sprint_path(@sprint.team, @sprint) %> |
+<%= link_to 'Back', team_path(@sprint.team) %>
+
+<% if sprint_is_complete?(@sprint) %>
+<h2>Summary</h2>
+<%= render "sprints/summary" %>
+<% end %>
+
+<h2>Sprint Info</h2>
+<p>
+  <b>End date:</b>
+  <%= @sprint.end_date %>
+</p>
+
+<p>
+  <b>Team size:</b>
+  <%= @sprint.team_size %>
+</p>
+
+<p>
+  <b>Working days:</b>
+  <%= @sprint.working_days %>
+</p>
+
+<p>
+  <b>PTO/OOO days:</b>
+  <%= @sprint.pto_days %>
+</p>
+
+<p>
+  <b>Effective team size:</b>
+  <%= effective_team_size(@sprint) %>
+</p>
+
+<h2>Actuals</h2>
+
+<p>
+  <b>Planned velocity:</b>
+  <%= @sprint.planned_velocity %>
+</p>
+
+<p>
+  <b>Actual velocity:</b>
+  <%= @sprint.actual_velocity %>
+</p>
+
+<p>
+  <b>Adopted points:</b>
+  <%= @sprint.adopted_points %>
+</p>
+
+<p>
+  <b>Unplanned points:</b>
+  <%= @sprint.unplanned_points %>
+</p>
+
+<p>
+  <b>Found points:</b>
+  <%= @sprint.found_points %>
+</p>
+
+<p>
+  <b>Partial points:</b>
+  <%= @sprint.partial_points %>
+</p>
+
+<%= link_to 'Edit', edit_team_sprint_path(@sprint.team, @sprint) %> |
+<%= link_to 'Back', team_path(@sprint.team) %>

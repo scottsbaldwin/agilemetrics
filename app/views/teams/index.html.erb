@@ -1,0 +1,24 @@
+<h1>Teams</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Sprint Length</th>
+    <th colspan="2">Actions</th>
+  </tr>
+
+<% @teams.each do |team| %>
+  <tr>
+    <td><%= link_to team.name, team %></td>
+    <td style="text-align: center"><%= pluralize team.sprint_weeks, "week" %></td>
+    <td>
+		<%= link_to 'Edit', edit_team_path(team) %>
+    	<%= link_to 'Destroy', team, confirm: 'Are you sure?', method: :delete %>
+	</td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Add a Team', new_team_path, :class => "button"  %>

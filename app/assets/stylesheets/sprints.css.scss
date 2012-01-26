@@ -1,0 +1,47 @@
+// Place all the styles related to the Sprints controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+table {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+table th {
+	background-color: #ccc;
+}
+
+table th, table td {
+	border: 1px solid black;
+	padding: 5px;
+}
+
+table.sprints th.sprintInfo {
+	background-color: CornSilk;
+}
+
+table.sprints th.actuals {
+	background-color: LightSkyBlue;
+}
+
+.alignNumber {
+	text-align: center;
+}
+
+.effectiveTeamSize {
+	background-color: #eee;
+}
+
+.field label {
+	display: inline-block;
+	width: 130px;
+}
+
+.field input {
+	border: 1px solid black;
+	padding: 3px;
+}
+
+.actions {
+	margin-left: 130px;
+	padding: 3px;
+}
