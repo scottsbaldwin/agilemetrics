@@ -12,8 +12,8 @@
     <td><%= link_to team.name, team %></td>
     <td style="text-align: center"><%= pluralize team.sprint_weeks, "week" %></td>
     <td>
-		<%= link_to 'Edit', edit_team_path(team) %>
-    	<%= link_to 'Destroy', team, confirm: 'Are you sure?', method: :delete %>
+		<%= link_to 'edit', edit_team_path(team) %>
+    	<%= link_to 'delete', team, confirm: "Are you sure you want to delete #{team.name}?", method: :delete %>
 	</td>
   </tr>
 <% end %>
