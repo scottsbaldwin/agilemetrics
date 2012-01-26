@@ -7,20 +7,23 @@ table {
 }
 
 table th {
-	background-color: #ccc;
+	background-color: #454545;
+	color: #eee;
+	font-weight: normal;
+	text-transform: lowercase;
 }
 
 table th, table td {
-	border: 1px solid black;
+	border: 1px solid #ddd;
 	padding: 5px;
 }
 
 table.sprints th.sprintInfo {
-	background-color: CornSilk;
+	background-color: CornflowerBlue;
 }
 
 table.sprints th.actuals {
-	background-color: LightSkyBlue;
+	background-color: CornflowerBlue;
 }
 
 .alignNumber {
@@ -37,11 +40,21 @@ table.sprints th.actuals {
 }
 
 .field input {
-	border: 1px solid black;
-	padding: 3px;
+	border: 1px solid CornflowerBlue;
+	padding: 10px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	font-size: 12pt;
+	text-align: right;
 }
 
 .actions {
 	margin-left: 130px;
 	padding: 3px;
+}
+
+.column {
+	float: left;
+	margin: auto;
+	margin-right: 25px;
 }

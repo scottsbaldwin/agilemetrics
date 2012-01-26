@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Agile Metrics</title>
+  <title>measure up :: your agile metrics</title>
+	<link href='http://fonts.googleapis.com/css?family=Raleway:100' rel='stylesheet' type='text/css'>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -11,8 +12,17 @@
     </script>
 </head>
 <body>
+<div id="head">
+	<div id="thinstrip"></div>
+	<div id="sitename"><%= link_to "measure up", root_path %></div>
+</div>
 
+<div id="content">
 <%= yield %>
+</div>
 
+<div id="foot">
+
+</div>
 </body>
 </html>

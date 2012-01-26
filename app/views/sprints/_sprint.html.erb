@@ -13,7 +13,7 @@
 	<td class="alignNumber"><%= sprint.found_points %></td>
 	<td class="alignNumber"><%= sprint.partial_points %></td>
 
-    <td><%= link_to 'Show', team_sprint_path(sprint.team, sprint) %></td>
-    <td><%= link_to 'Edit', edit_team_sprint_path(sprint.team, sprint) %></td>
-	<td><%= link_to "Destroy", [sprint.team, sprint], :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'show', team_sprint_path(sprint.team, sprint) %></td>
+    <td><%= link_to 'edit', edit_team_sprint_path(sprint.team, sprint) %></td>
+	<td><%= link_to "delete", [sprint.team, sprint], :confirm => "Are you sure you want to delete #{sprint.sprint_name}?", :method => :delete %></td>
 	</tr>

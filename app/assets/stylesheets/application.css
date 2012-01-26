@@ -12,26 +12,107 @@
  *= require_tree .
 */
 
+body {
+	margin: 0px;
+	padding: 0px;
+	background-color: #ddd !important;
+}
+
+#head {
+	height: 125px;
+	background-color: #454545;
+}
+
+#thinstrip {
+	height: 20px;
+	background-color: CornflowerBlue;
+}
+
+#sitename {
+	margin-top: 10px;
+	margin-left: auto;
+	margin-right: 0px;
+	width:275px;
+	height: 50px;
+	padding: 10px;
+	/*text-shadow: 1px 1px 1px #DFD1E8;*/
+}
+
+#sitename a {
+	font-family: 'Raleway', cursive;
+	font-size: 48px;
+	color: white;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#sitename a:hover {
+	background-color: #454545 !important;	
+}
+
+#nav {
+	width: 95%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+}
+
+#content {
+	width: 95%;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: white;
+	padding: 10px;
+	padding-bottom: 20px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	-moz-box-shadow: 10px 10px 5px #888;
+	-webkit-box-shadow: 10px 10px 5px #888;
+	box-shadow: 10px 10px 5px #888;
+	border: 1px solid #454545;
+}
+
+#foot {
+	height: 200px;
+	background-color: #454545;
+}
+
+h1 {
+	font-family: 'Raleway', cursive;
+	font-size: 36px;
+	color: CornflowerBlue;
+	text-transform: lowercase;
+}
+
+h2 {
+	font-family: 'Raleway', cursive;
+	font-size: 24px;
+	color: black;
+	text-transform: lowercase;
+}
+
 .button {
+	text-transform: lowercase;
   padding: 10px 25px 10px 25px;
-  font-family: Arial;
+  font-family: 'Raleway', cursive;
+	font-weight: bold;
   font-size: 16px;
   text-decoration: none;
   color: #ffffff !important;
-  text-shadow: -1px -1px 2px #618926;
-  background: -moz-linear-gradient(#98ba40, #a6c250 35%, #618926);
-  background: -webkit-gradient(linear,left top,left bottom,color-stop(0, #98ba40),color-stop(.35, #a6c250),color-stop(1, #618926));
-  border: 1px solid #618926;
   border-radius: 3px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
-}
 
-.button:hover {
-  text-shadow: -1px -1px 2px #465f97;
+  /*text-shadow: -1px -1px 2px #465f97;*/
   background: -moz-linear-gradient(#245192, #1e3b73 75%, #12295d);
   background: -webkit-gradient(linear,left top,left bottom,color-stop(0, #245192),color-stop(.75, #1e3b73),color-stop(1, #12295d));
   border: 1px solid #0f2557;
+}
+
+.button:hover {
+  background: -moz-linear-gradient(#98ba40, #a6c250 35%, #618926);
+  background: -webkit-gradient(linear,left top,left bottom,color-stop(0, #98ba40),color-stop(.35, #a6c250),color-stop(1, #618926));
+  border: 1px solid #618926;
 }
 
 /** VERSION 2 -------

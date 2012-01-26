@@ -1,5 +1,4 @@
-<h1><%= @sprint.team.name %> :: Edit <%= @sprint.sprint_name %></h1>
-
+<h1><%= @sprint.team.name %> | <%= @sprint.sprint_name %></h1>
 <%= render 'form' %>
-
-<%= link_to 'Back', team_path(@team) %>
+<%= link_to "back to #{@sprint.team.name}", team_path(@team) %> | 
+<%= link_to "back to #{@sprint.sprint_name}", [@sprint.team, @sprint] %>

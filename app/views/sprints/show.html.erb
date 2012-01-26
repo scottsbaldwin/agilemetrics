@@ -1,71 +1,83 @@
 <p id="notice"><%= notice %></p>
-<h1><%= @sprint.team.name %> :: <%= @sprint.sprint_name %></h1>
+<h1><%= @sprint.team.name %> | <%= @sprint.sprint_name %></h1>
 
-<%= link_to 'Edit', edit_team_sprint_path(@sprint.team, @sprint) %> |
-<%= link_to 'Back', team_path(@sprint.team) %>
+<%= link_to "edit sprint #{@sprint.sprint_name}", edit_team_sprint_path(@sprint.team, @sprint) %> |
+<%= link_to "back to the #{@sprint.team.name} team", team_path(@sprint.team) %>
 
+<div class="clear"></div>
 <% if sprint_is_complete?(@sprint) %>
+<div class="column">
 <h2>Summary</h2>
 <%= render "sprints/summary" %>
+</div>
 <% end %>
 
+<div class="column">
 <h2>Sprint Info</h2>
-<p>
-  <b>End date:</b>
-  <%= @sprint.end_date %>
-</p>
+<table>
+<tbody>
+<tr>
+<td>End date</td>
+<td><%= @sprint.end_date %></td>
+</tr>
 
-<p>
-  <b>Team size:</b>
-  <%= @sprint.team_size %>
-</p>
+<tr>
+<td>Team size</td>
+<td class="alignNumber"><%= @sprint.team_size %></td>
+</tr>
 
-<p>
-  <b>Working days:</b>
-  <%= @sprint.working_days %>
-</p>
+<tr>
+<td>Working days</td>
+<td class="alignNumber"><%= @sprint.working_days %></td>
+</tr>
 
-<p>
-  <b>PTO/OOO days:</b>
-  <%= @sprint.pto_days %>
-</p>
+<tr>
+<td>PTO/OOO days</td>
+<td class="alignNumber"><%= @sprint.pto_days %></td>
+</tr>
 
-<p>
-  <b>Effective team size:</b>
-  <%= effective_team_size(@sprint) %>
-</p>
+<tr>
+<td>Effective team size</td>
+<td class="alignNumber"><%= effective_team_size(@sprint) %></td>
+</tr>
+</tbody>
+</table>
+</div>
 
+<div class="column">
 <h2>Actuals</h2>
+<table>
+<tbody>
+<tr>
+<td>Planned velocity</td>
+<td class="alignNumber"><%= @sprint.planned_velocity %></td>
+</tr>
 
-<p>
-  <b>Planned velocity:</b>
-  <%= @sprint.planned_velocity %>
-</p>
+<tr>
+<td>Actual velocity</td>
+<td class="alignNumber"><%= @sprint.actual_velocity %></td>
+</tr>
 
-<p>
-  <b>Actual velocity:</b>
-  <%= @sprint.actual_velocity %>
-</p>
+<tr>
+<td>Adopted points</td>
+<td class="alignNumber"><%= @sprint.adopted_points %></td>
+</tr>
 
-<p>
-  <b>Adopted points:</b>
-  <%= @sprint.adopted_points %>
-</p>
+<tr>
+<td>Unplanned points</td>
+<td class="alignNumber"><%= @sprint.unplanned_points %></td>
+</tr>
 
-<p>
-  <b>Unplanned points:</b>
-  <%= @sprint.unplanned_points %>
-</p>
+<tr>
+<td>Found points</td>
+<td class="alignNumber"><%= @sprint.found_points %></td>
+</tr>
 
-<p>
-  <b>Found points:</b>
-  <%= @sprint.found_points %>
-</p>
-
-<p>
-  <b>Partial points:</b>
-  <%= @sprint.partial_points %>
-</p>
-
-<%= link_to 'Edit', edit_team_sprint_path(@sprint.team, @sprint) %> |
-<%= link_to 'Back', team_path(@sprint.team) %>
+<tr>
+<td>Partial points</td>
+<td class="alignNumber"><%= @sprint.partial_points %></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="clear"></div>
