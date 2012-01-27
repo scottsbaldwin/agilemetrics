@@ -4,6 +4,6 @@ class Team < ActiveRecord::Base
 							:numericality => { :less_than => 3, :greater_than => 0 }
 
 	has_many :sprints, 
-					:order => "sprint_name asc", 
+					:order => "sprint_name asc, end_date asc", 
 					:dependent => :destroy
 end

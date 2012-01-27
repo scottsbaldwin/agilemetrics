@@ -16,8 +16,9 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :sprint_weeks %>
+    <%= f.label "Sprint length" %>
     <%= f.number_field :sprint_weeks %>
+	(weeks)
   </div>
   <div class="actions">
     <%= f.submit "Submit", :class => 'button large green' %>
