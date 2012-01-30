@@ -25,7 +25,8 @@ module SprintsHelper
 	end
 
 	def last_n_sprints(sprints, max_nr)
-		sprints.last max_nr
+		complete_sprints = sprints.select { |sprint| sprint_is_complete?(sprint) }
+		complete_sprints.last max_nr
 	end
 
 	def last_complete_sprint(sprints)
@@ -40,17 +41,17 @@ module SprintsHelper
 	end
 
 	def sprint_is_complete?(sprint)
-		!sprint.sprint_name.blank? &&
-		!sprint.end_date.blank? &&
-		!sprint.team_size.blank? &&
-		!sprint.working_days.blank? &&
-		!sprint.pto_days.blank? &&
-		!sprint.planned_velocity.blank? &&
-		!sprint.actual_velocity.blank? &&
-		!sprint.adopted_points.blank? &&
-		!sprint.unplanned_points.blank? &&
-		!sprint.found_points.blank? &&
-		!sprint.partial_points.blank?
+		!sprint.sprint_name.blank? && sprint.sprint_name != nil &&
+		!sprint.end_date.blank? && sprint.end_date != nil &&
+		!sprint.team_size.blank? && sprint.team_size != nil &&
+		!sprint.working_days.blank? && sprint.working_days != nil &&
+		!sprint.pto_days.blank? && sprint.pto_days != nil &&
+		!sprint.planned_velocity.blank? && sprint.planned_velocity != nil &&
+		!sprint.actual_velocity.blank? && sprint.actual_velocity != nil &&
+		!sprint.adopted_points.blank? && sprint.adopted_points != nil &&
+		!sprint.unplanned_points.blank? && sprint.unplanned_points != nil && 
+		!sprint.found_points.blank? && sprint.found_points != nil &&
+		!sprint.partial_points.blank? && sprint.partial_points != nil
 	end
 
 	def committed_velocity(sprint)
@@ -106,7 +107,7 @@ module SprintsHelper
 		set = sprints[0, idx+1].last(n)
 		# find the average over the last n sprints
 		sum = 0
-		set.each { |sprint| sum += sprint.actual_velocity }
+		set.each { |sprint| sum += sprint.actual_velocity if sprint.actual_velocity != nil }
 		avg = 0
 		avg = sum / set.size if set.size > 0
 	end

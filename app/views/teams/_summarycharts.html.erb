@@ -3,13 +3,15 @@
 	<%= render "sprints/summary" %>
 </div>
 <div id="charts">
+		<% last_sprints = last_n_sprints(@team.sprints, 10) %>
+		<% if last_sprints.size > 0 %>
     <script type="text/javascript">
       function drawVisualization() {
 
 		var velocityChart = {
           chartType: 'LineChart',
           dataTable: [['', 'Actual Velocity', 'Committed Velocity', 'Avg Velocity', 'Capacity'],
-					<% last_n_sprints(@team.sprints, 10).each do |sprint| 
+					<%  last_sprints.each do |sprint| 
 							if sprint_is_complete?(sprint)
 					%>
                       ['<%= sprint.sprint_name %>', <%= sprint.actual_velocity %>, <%= committed_velocity(sprint) %>, <%= average_velocity(@team.sprints, sprint, 6) %>, <%= capacity(sprint) %>],
@@ -66,13 +68,6 @@
 					<% 		end 
 						end
 					%>
-/*
-                      ['2011.11.25', 76, 88, 85, 0, 20, 80],
-                      ['2011.12.07', 79, 92, 88, 0, 20, 80],
-                      ['2011.12.21', 83, 95, 96, 5, 20, 80],
-                      ['2012.01.11', 88, 93, 93, 8, 20, 80],
-                      ['2012.01.25', 85, 89, 94, 0, 20, 80]
-*/
 			],
           options: {'title': 'Process Metrics Trend',
 					curveType: "function", 
@@ -108,5 +103,6 @@
 		<td colspan="2"><div id="processTrend"></div></td>
 		</tr>
 	</table>
+	<% end %>
 </div>
 <div class="clear"></div>
