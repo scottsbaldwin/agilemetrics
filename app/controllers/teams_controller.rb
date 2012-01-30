@@ -18,6 +18,7 @@ class TeamsController < ApplicationController
     @team = Team.find(params[:id])
 	@summary_sprint = last_complete_sprint(@team.sprints)
 	@first_sprint = @team.sprints.find(:first)
+	@last_sprint = @team.sprints.find(:last)
 
     respond_to do |format|
       format.html # show.html.erb

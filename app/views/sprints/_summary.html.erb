@@ -69,5 +69,19 @@ if @summary_sprint != nil
 </tr>
 </tbody>
 </table>
+
+<table style="margin-top: 15px; width: 100%">
+<thead>
+<tr>
+<th>to maintain<br/>maximum efficiency:</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td class="target"><%= pluralize(maintain_target(@team.sprints, @last_sprint), "pt") %></td>
+</tr>
+</tbody>
+</table>
 <% end %>
 

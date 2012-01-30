@@ -9,6 +9,21 @@ module SprintsHelper
 		metric
 	end
 
+	def maintain_target(sprints, sprint)
+		# Get the previous sprints
+		previous_sprints = sprints.select { |s| s.sprint_name < sprint.sprint_name && sprint_is_complete?(s) }
+		previous_sprints = previous_sprints.last(6)
+
+		# find the maximum points per day over the previous sprints
+		pts_per_person_day_array = previous_sprints.map { |s| points_per_person_day(s) }
+		pts_per_person_day_array.sort!
+		max_pts = pts_per_person_day_array.pop
+
+		# pts per person day of previous sprint * man days of current sprint
+		target = max_pts * man_days(sprint) if max_pts != nil && sprint != nil 
+		target.round(0)
+	end
+
 	def effective_team_size(sprint)
 		# make sure we have values
 		sprint.team_size = sprint.team_size ? sprint.team_size : 0
