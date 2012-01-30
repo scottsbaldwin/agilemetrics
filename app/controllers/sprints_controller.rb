@@ -6,6 +6,7 @@ class SprintsController < ApplicationController
 	@sprint = @team.sprints.find(params[:id])
 	@summary_sprint = @sprint
 	@first_sprint = @team.sprints.find(:first)
+	@last_sprint = @team.sprints.find(:last)
 
     respond_to do |format|
       format.html # show.html.erb
