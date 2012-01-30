@@ -3,7 +3,8 @@ class TeamsController < ApplicationController
   # GET /teams
   # GET /teams.json
   def index
-    @teams = Team.all
+    #@teams = Team.all.order("name asc")
+    @teams = Team.order("UPPER(name) asc")
 
     respond_to do |format|
       format.html # index.html.erb
