@@ -39,13 +39,17 @@ table.sprints th.actuals {
 	width: 130px;
 }
 
-.field input {
+.field input, .field textarea {
 	border: 1px solid CornflowerBlue;
 	padding: 10px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	font-size: 12pt;
 	text-align: right;
+}
+
+.field textarea {
+	text-align: left !important;
 }
 
 .actions {
