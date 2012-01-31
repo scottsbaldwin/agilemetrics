@@ -18,7 +18,21 @@ class SprintsController < ApplicationController
   # GET /teams/1/sprints/new.json
   def new
 	@team = Team.find(params[:team_id])
+	@previous_sprint = @team.sprints.find(:last)
     @sprint = @team.sprints.new
+
+	# guess the sprint name and end date
+	t = Time.now
+	@sprint.sprint_name = t.strftime "%Y.%m.%d"
+	@sprint.end_date = t.strftime "%Y-%m-%d"
+	# pre-populate some values from the previous sprint
+	if @previous_sprint != nil
+		@sprint.team_size = @previous_sprint.team_size if @previous_sprint.team_size != nil
+		@sprint.working_days = @previous_sprint.working_days if @previous_sprint.working_days != nil
+		@sprint.pto_days = @previous_sprint.pto_days if @previous_sprint.pto_days != nil
+		# guess the planned velocity using the actual velocity from the prior sprint
+		@sprint.planned_velocity = @previous_sprint.actual_velocity if @previous_sprint.actual_velocity != nil
+	end
 
     respond_to do |format|
       format.html # new.html.erb

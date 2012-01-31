@@ -81,3 +81,8 @@
 </table>
 </div>
 <div class="clear"></div>
+
+<% if @sprint.note != nil && !@sprint.note.blank? %>
+<h2>Notes</h2>
+<p><%= @sprint.note %>
+<% end %>

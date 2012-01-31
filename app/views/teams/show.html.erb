@@ -11,6 +11,6 @@
 <% end %>
 
 <h2>sprints</h2>
-<p>Tip: teams are ordered by name in ascending order.</p>
-<%= render "teams/sprintlist" %>
+<p>Tip: teams are ordered by name with the most recent at top of the list below. Name your sprints to fit alphabetically in the list.</p>
 <p><%= link_to "add a sprint", new_team_sprint_path(@team), :class => "button"  %></p>
+<%= render "teams/sprintlist" %>
