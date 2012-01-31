@@ -21,7 +21,11 @@ module SprintsHelper
 
 		# pts per person day of previous sprint * man days of current sprint
 		target = max_pts * man_days(sprint) if max_pts != nil && sprint != nil 
-		target.round(0)
+		if target != nil
+			target.round(0)
+		else
+			0
+		end
 	end
 
 	def effective_team_size(sprint)
