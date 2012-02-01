@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120131211559) do
+ActiveRecord::Schema.define(:version => 20120201164143) do
 
   create_table "sprints", :force => true do |t|
     t.string   "sprint_name"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(:version => 20120131211559) do
     t.integer  "team_id"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
-    t.string   "note"
+    t.text     "note"
   end
 
   add_index "sprints", ["team_id"], :name => "index_sprints_on_team_id"
