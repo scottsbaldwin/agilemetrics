@@ -4,6 +4,7 @@
   <tr>
     <th>Name</th>
     <th>Sprint Length</th>
+    <th>Latest Sprint</th>
     <th colspan="2">Actions</th>
   </tr>
 
@@ -11,6 +12,7 @@
   <tr>
     <td><%= link_to team.name, team %></td>
     <td style="text-align: center"><%= pluralize team.sprint_weeks, "week" %></td>
+    <td style="text-align: center"><%= team.sprints.find(:last).sprint_name if team.sprints.find(:last) != nil %></td>
     <td style="text-align: center">
 		<%= link_to 'edit', edit_team_path(team) %>
 <!--
