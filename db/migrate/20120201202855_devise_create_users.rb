@@ -8,7 +8,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
 
   	  t.string :first_name
   	  t.string :last_name
-      
+
       # t.encryptable
       # t.confirmable
       # t.lockable :lock_strategy => :failed_attempts, :unlock_strategy => :both
