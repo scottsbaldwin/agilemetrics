@@ -1,6 +1,13 @@
 <h1>teams</h1>
 
+<%= link_to 'add a team', new_team_path, :class => "button"  %>
+<br/><br/>
+
 <table>
+  <tr>
+	<th colspan="6">Active Teams</th>
+  </tr>
+
   <tr>
     <th>Name</th>
     <th>Sprint Length</th>
@@ -9,7 +16,7 @@
     <th colspan="2">Actions</th>
   </tr>
 
-<% @teams.each do |team| %>
+<% @active_teams.each do |team| %>
   <tr>
     <td><%= link_to team.name, team %></td>
     <td style="text-align: center"><%= pluralize team.sprint_weeks, "week" %></td>
@@ -25,13 +32,47 @@
     <td style="text-align: center">
 		<% if user_signed_in? && is_username_an_owner_of_team?(current_user.login, team) -%>
 			<%= link_to 'edit', edit_team_path(team) %>
+		<% end -%>
+	</td>
+  </tr>
+<% end %>
+
+<% if @archived_teams.length > 0 -%>
+  <tr>
+	<th colspan="6">Archived Teams</th>
+  </tr>
+
+  <tr>
+    <th>Name</th>
+    <th>Sprint Length</th>
+    <th>Latest Sprint</th>
+    <th>Admins</th>
+    <th colspan="2">Actions</th>
+  </tr>
+
+<% @archived_teams.each do |team| %>
+  <tr>
+    <td><%= link_to team.name, team %></td>
+    <td style="text-align: center"><%= pluralize team.sprint_weeks, "week" %></td>
+    <td style="text-align: center">
+		<%
+			latest_sprint = team.sprints.find(:last)
+			if latest_sprint != nil
+		-%>
+			<%= link_to latest_sprint.sprint_name, [team, latest_sprint] %>
+		<% end -%>
+	</td>
+	<td><%= team.owners %></td>
+    <td style="text-align: center">
+		<% if user_signed_in? && is_username_an_owner_of_team?(current_user.login, team) -%>
+			<%= link_to 'edit', edit_team_path(team) %>
+		<% end -%>
+		<% if user_signed_in? && is_super_admin?(current_user.login) -%>
     		<%= link_to 'delete', team, confirm: "Are you sure you want to delete #{team.name}?", method: :delete %>
 		<% end -%>
 	</td>
   </tr>
 <% end %>
+<% end %>
 </table>
 
-<br />
-
-<%= link_to 'add a team', new_team_path, :class => "button"  %>

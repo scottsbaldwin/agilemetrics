@@ -5,6 +5,8 @@ module TeamsHelper
 		if username != nil && team != nil && team.owners != nil
 			result = team.owners.include?(username)
 		end
+
+		result ||= is_super_admin?(username)
 		
 		return result
 	end

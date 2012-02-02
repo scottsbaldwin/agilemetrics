@@ -5,6 +5,8 @@ class TeamsController < ApplicationController
   def index
     #@teams = Team.all.order("name asc")
     @teams = Team.order("UPPER(name) asc")
+	@active_teams = @teams.where(:is_archived => false)
+	@archived_teams = @teams.where(:is_archived => true)
 
     respond_to do |format|
       format.html # index.html.erb

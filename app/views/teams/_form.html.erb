@@ -17,13 +17,17 @@
   </div>
   <div class="field">
     <%= f.label "Sprint length" %>
-    <%= f.number_field :sprint_weeks %>
+    <%= f.number_field :sprint_weeks, :in => 1..2 %>
 	(weeks)
   </div>
   <div class="field">
     <%= f.label "Admins" %>
     <%= f.text_field :owners %>
 	(login IDs of who can edit/delete the team)
+  </div>
+  <div class="field">
+    <%= f.label :is_archived %>
+    <%= f.check_box :is_archived %>
   </div>
   <div class="actions">
     <%= f.submit "Submit", :class => 'button large green' %>

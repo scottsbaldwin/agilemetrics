@@ -1,4 +1,4 @@
-<h1><%= @team.name %></h1>
+<h1><%= @team.name %><%= @team.is_archived ? " (archived)" : "" -%></h1>
 
 <p><%= @team.name %> uses <strong><%= @team.sprint_weeks %> week</strong> sprints.</p>
 <% if @team.owners != nil && @team.owners != "" -%>
