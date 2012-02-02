@@ -1,7 +1,8 @@
-<p id="notice"><%= notice %></p>
 <h1><%= @sprint.team.name %> | <%= @sprint.sprint_name %></h1>
 
-<%= link_to "edit sprint #{@sprint.sprint_name}", edit_team_sprint_path(@sprint.team, @sprint) %> |
+<% if is_username_an_owner_of_team?(current_user.login, @sprint.team) -%>
+	<%= link_to "edit sprint #{@sprint.sprint_name}", edit_team_sprint_path(@sprint.team, @sprint) %> |
+<% end -%>
 <%= link_to "back to the #{@sprint.team.name} team", team_path(@sprint.team) %>
 
 <div class="clear"></div>

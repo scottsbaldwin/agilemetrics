@@ -13,7 +13,9 @@
 	<td class="alignNumber"><%= sprint.found_points %></td>
 	<td class="alignNumber"><%= sprint.partial_points %></td>
 
-    <td><%= link_to 'show', team_sprint_path(sprint.team, sprint) %></td>
-    <td><%= link_to 'edit', edit_team_sprint_path(sprint.team, sprint) %></td>
-	<td><%= link_to "delete", [sprint.team, sprint], :confirm => "Are you sure you want to delete #{sprint.sprint_name}?", :method => :delete %></td>
+    <td<%= ' colspan="3"' if !is_username_an_owner_of_team?(current_user.login, @team) -%> style="text-align:center"><%= link_to 'show', team_sprint_path(sprint.team, sprint) %></td>
+	<% if is_username_an_owner_of_team?(current_user.login, @team) -%>
+    	<td style="text-align:center"><%= link_to 'edit', edit_team_sprint_path(sprint.team, sprint) %></td>
+		<td style="text-align:center"><%= link_to "delete", [sprint.team, sprint], :confirm => "Are you sure you want to delete #{sprint.sprint_name}?", :method => :delete %></td>
+	<% end -%>
 	</tr>

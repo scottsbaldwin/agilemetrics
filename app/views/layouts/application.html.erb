@@ -15,9 +15,17 @@
 <div id="head">
 	<div id="thinstrip"></div>
 	<div id="sitename"><%= link_to "measure up", root_path %></div>
+	<div id="usernav">
+		<% if user_signed_in? %>
+		Hi, <%= current_user.login %>! 
+	    <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+		<% end %>
+	</div>
 </div>
 
 <div id="content">
+       <p class="alert"><%= alert %></p>
+       <p id="notice" class="notice"><%= notice %></p>
 <%= yield %>
 </div>
 

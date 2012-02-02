@@ -30,6 +30,7 @@ class TeamsController < ApplicationController
   # GET /teams/new.json
   def new
     @team = Team.new
+	@team.owners = current_user.login if current_user != nil
 
     respond_to do |format|
       format.html # new.html.erb

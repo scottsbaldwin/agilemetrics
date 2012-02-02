@@ -9,6 +9,9 @@ gem 'rails', '3.2.0'
 #gem 'pg'
 gem 'mysql2'
 
+gem 'devise', '~> 1.4'
+gem 'devise_ldap_authenticatable'
+
 #gem 'rake', '0.9.2.2'
 
 

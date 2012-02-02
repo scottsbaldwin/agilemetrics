@@ -1,4 +1,6 @@
 Agilemetrics::Application.routes.draw do
+  devise_for :users
+
   resources :teams do
 	resources :sprints
   end

@@ -20,6 +20,11 @@
     <%= f.number_field :sprint_weeks %>
 	(weeks)
   </div>
+  <div class="field">
+    <%= f.label "Admins" %>
+    <%= f.text_field :owners %>
+	(login IDs of who can edit/delete the team)
+  </div>
   <div class="actions">
     <%= f.submit "Submit", :class => 'button large green' %>
   </div>
