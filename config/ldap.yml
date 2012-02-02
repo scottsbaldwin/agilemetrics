@@ -25,9 +25,9 @@ development:
   port: 389
   #attribute: cn
   attribute: sAMAccountName
-  base: ou=Corp,dc=myfamily,dc=int
-  admin_user: "MYFAMILY\\automation"
-  admin_password: QAscr1pt
+  base: ou=Corp,dc=FOO,dc=BAR
+  admin_user: "DOMAIN\\user"
+  admin_password: password
   ssl: false
   # <<: *AUTHORIZATIONS
 

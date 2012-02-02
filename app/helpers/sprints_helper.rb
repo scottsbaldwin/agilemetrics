@@ -1,11 +1,18 @@
 module SprintsHelper
 	def man_days(sprint)
-		days = sprint.team_size * sprint.working_days - sprint.pto_days
+		team_size = sprint.team_size != nil ? sprint.team_size : 0
+		working_days = sprint.working_days != nil ? sprint.working_days : 0
+		pto_days = sprint.pto_days != nil ? sprint.pto_days : 0
+		days = team_size * working_days - pto_days
 		days
 	end
 
 	def points_per_person_day(sprint)
-		metric = sprint.actual_velocity / man_days(sprint)
+		man_days_denominator = man_days(sprint)
+		metric = 0
+		if man_days_denominator != 0
+			metric = sprint.actual_velocity / man_days_denominator
+		end
 		metric
 	end
 
