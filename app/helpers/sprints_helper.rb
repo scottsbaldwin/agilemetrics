@@ -1,3 +1,5 @@
+require 'linearregression'
+
 module SprintsHelper
 	def man_days(sprint)
 		team_size = sprint.team_size != nil ? sprint.team_size : 0
@@ -14,6 +16,38 @@ module SprintsHelper
 			metric = sprint.actual_velocity / man_days_denominator
 		end
 		metric
+	end
+
+	@linear_regression = nil
+	def get_linear_regression(sprints, sprint)
+		if @linear_regression == nil
+			previous_sprints = sprints.select { |s| s.sprint_name < sprint.sprint_name && sprint_is_complete?(s) }
+			previous_sprints = previous_sprints.last(10)
+
+			actual_velocities = []
+			if previous_sprints != nil && previous_sprints.length > 0
+				actual_velocities = previous_sprints.map { |sprint| sprint.actual_velocity }
+			end
+		
+			@linear_regression = LinearRegression.new actual_velocities
+		end
+		return @linear_regression
+	end
+
+	def next_velocity_in_trend(sprints, sprint)
+		lr = get_linear_regression(sprints, sprint)
+		lr.next.round(0)
+	end
+
+	def velocity_growth(sprints, sprint)
+		lr = get_linear_regression(sprints, sprint)
+		rate = lr.slope.round(1)
+		prefix = ""
+		prefix = "+" if rate > 0
+		# get rid of the - sign when the unrounded number was negative
+		rate = 0 if rate == 0
+		pluralize "%s%s" % [ prefix, rate ], "pt"
+		
 	end
 
 	def maintain_target(sprints, sprint)

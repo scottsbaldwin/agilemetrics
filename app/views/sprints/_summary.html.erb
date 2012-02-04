@@ -73,14 +73,23 @@ if @summary_sprint != nil
 <table style="margin-top: 15px; width: 100%">
 <thead>
 <tr>
-<th>to maintain<br/>maximum efficiency:</th>
+<th>to maintain your<br/>velocity trend, plan for</th>
 </tr>
 </thead>
 
 <tbody>
 <tr>
-<td class="target"><%= pluralize(maintain_target(@team.sprints, @last_sprint), "pt") %></td>
+<td class="target"><%= pluralize(next_velocity_in_trend(@team.sprints, @last_sprint), "pt") %></td>
 </tr>
+
+<tr>
+<th>your velocity growth rate<br/>sprint over sprint</th>
+</tr>
+
+<tr>
+<td class="target"><%= velocity_growth(@team.sprints, @last_sprint) %></td>
+</tr>
+
 </tbody>
 </table>
 <% end %>
