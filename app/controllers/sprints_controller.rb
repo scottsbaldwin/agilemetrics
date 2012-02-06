@@ -1,4 +1,5 @@
 class SprintsController < ApplicationController
+	include SprintsHelper
   # GET /teams/1/sprints/1
   # GET /teams/1/spritns/1.json
   def show
@@ -7,6 +8,7 @@ class SprintsController < ApplicationController
 	@summary_sprint = @sprint
 	@first_sprint = @team.sprints.find(:first)
 	@last_sprint = @team.sprints.find(:last)
+	@linear_regression = get_linear_regression_actual_velocity(@team.sprints, @last_sprint)
 
     respond_to do |format|
       format.html # show.html.erb
