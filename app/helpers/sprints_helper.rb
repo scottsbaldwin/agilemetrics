@@ -18,30 +18,35 @@ module SprintsHelper
 		metric
 	end
 
-	@linear_regression = nil
-	def get_linear_regression(sprints, sprint)
-		if @linear_regression == nil
-			previous_sprints = sprints.select { |s| s.sprint_name < sprint.sprint_name && sprint_is_complete?(s) }
-			previous_sprints = previous_sprints.last(10)
+	def get_linear_regression_actual_velocity(sprints, sprint)
+		previous_sprints = sprints.select { |s| s.sprint_name < sprint.sprint_name && sprint_is_complete?(s) }
+		previous_sprints = previous_sprints.last(10)
 
-			actual_velocities = []
-			if previous_sprints != nil && previous_sprints.length > 0
-				actual_velocities = previous_sprints.map { |sprint| sprint.actual_velocity }
-			end
-		
-			@linear_regression = LinearRegression.new actual_velocities
+		actual_velocities = []
+		if previous_sprints != nil && previous_sprints.length > 0
+			actual_velocities = previous_sprints.map { |sprint| sprint.actual_velocity }
 		end
-		return @linear_regression
+	
+		linear_regression = LinearRegression.new actual_velocities
+		return linear_regression
 	end
 
-	def next_velocity_in_trend(sprints, sprint)
-		lr = get_linear_regression(sprints, sprint)
-		lr.next.round(0)
+	def next_velocity_in_trend(linear_regression)
+		rate = linear_regression.slope.round(1)
+		reate = 0 if rate == 0
+		# if the growth rate (slope) is better than 0 then give
+		# the target to the next in the trend
+		if rate >= 0
+			linear_regression.next.ceil
+		else
+			# if the growth rate is negative, find out what
+			# is needed to correct the behavior and stabilize at 0
+			linear_regression.stabilize_over_n_values(10).ceil
+		end
 	end
 
-	def velocity_growth(sprints, sprint)
-		lr = get_linear_regression(sprints, sprint)
-		rate = lr.slope.round(1)
+	def velocity_growth(linear_regression)
+		rate = linear_regression.slope.round(1)
 		prefix = ""
 		prefix = "+" if rate > 0
 		# get rid of the - sign when the unrounded number was negative

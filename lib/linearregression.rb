@@ -45,4 +45,40 @@ class LinearRegression
   def next
 	predict (@size + 1)
   end
+
+  # Determine the target needed to stabilize
+  # the slope back to 0, assuming slope is
+  # negative. The target returned will be
+  # the number needed to have stabilized slope
+  # inclusive of all values in the set
+  def stabilize_over_all
+    target = stabilize @y_values
+    target
+  end 
+
+  # Determine the target needed to stabilize
+  # the slope back to 0, assuming slope is
+  # negative. The target returned will be
+  # the number needed to have stabilized slope
+  # over a set of values of size n (including
+  # the target value
+  def stabilize_over_n_values(n)
+    values = []
+    length = @y_values.length >= n ? n - 1 : @y_values.length
+    values = @y_values.last(length) if n - 1 >= 0
+    target = stabilize values
+    target
+  end 
+
+  private
+  def stabilize(values)
+    n = values.length
+    sum = 0 
+    target = 0 
+    values.each_with_index do |value, i|
+        sum += (n - (2 * i)) * value
+    end 
+    target = 1.0 * sum / n if n > 0 
+    target
+  end
 end

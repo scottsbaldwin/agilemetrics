@@ -73,13 +73,19 @@ if @summary_sprint != nil
 <table style="margin-top: 15px; width: 100%">
 <thead>
 <tr>
-<th>to maintain your<br/>velocity trend, plan for</th>
+<th>
+<% if velocity_growth(@linear_regression).to_f > 0 -%>
+	to maintain your<br/>velocity trend, plan for
+<% else -%>
+	to correct your<br/>negative trend, plan for
+<% end -%>
+</th>
 </tr>
 </thead>
 
 <tbody>
 <tr>
-<td class="target"><%= pluralize(next_velocity_in_trend(@team.sprints, @last_sprint), "pt") %></td>
+<td class="target"><%= pluralize(next_velocity_in_trend(@linear_regression), "pt") %></td>
 </tr>
 
 <tr>
@@ -87,7 +93,7 @@ if @summary_sprint != nil
 </tr>
 
 <tr>
-<td class="target"><%= velocity_growth(@team.sprints, @last_sprint) %></td>
+<td class="target"><%= velocity_growth(@linear_regression) %></td>
 </tr>
 
 </tbody>

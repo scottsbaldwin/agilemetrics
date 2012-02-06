@@ -21,6 +21,7 @@ class TeamsController < ApplicationController
 	@summary_sprint = last_complete_sprint(@team.sprints)
 	@first_sprint = @team.sprints.find(:first)
 	@last_sprint = @team.sprints.find(:last)
+	@linear_regression = get_linear_regression_actual_velocity(@team.sprints, @last_sprint)
 
     respond_to do |format|
       format.html # show.html.erb
