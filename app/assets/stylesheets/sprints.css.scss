@@ -18,11 +18,7 @@ table th, table td {
 	padding: 5px;
 }
 
-table.sprints th.sprintInfo {
-	background-color: CornflowerBlue;
-}
-
-table.sprints th.actuals {
+table.sprints th.sprintInfo, table.sprints th.actuals, table.sprints th.tests {
 	background-color: CornflowerBlue;
 }
 
@@ -36,6 +32,7 @@ table.sprints th.actuals {
 
 .field label {
 	display: inline-block;
+	vertical-align: top;
 	width: 130px;
 }
 

@@ -81,6 +81,29 @@
 </tbody>
 </table>
 </div>
+
+<div class="column">
+<h2>Tests</h2>
+<table>
+<tbody>
+<tr>
+<td>Code coverage</td>
+<td class="alignNumber"><%= !@sprint.code_coverage.blank? ? "%s%%" % @sprint.code_coverage : "0%"  %></td>
+</tr>
+
+<tr>
+<td>Manual Tests</td>
+<td class="alignNumber"><%= @sprint.nr_manual_tests %></td>
+</tr>
+
+<tr>
+<td>Automated Tests</td>
+<td class="alignNumber"><%= @sprint.nr_automated_tests %></td>
+</tr>
+</tbody>
+</table>
+</div>
+
 <div class="clear"></div>
 
 <% if @sprint.note != nil && !@sprint.note.blank? %>

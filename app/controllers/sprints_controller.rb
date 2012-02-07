@@ -34,6 +34,10 @@ class SprintsController < ApplicationController
 		@sprint.pto_days = @previous_sprint.pto_days if @previous_sprint.pto_days != nil
 		# guess the planned velocity using the actual velocity from the prior sprint
 		@sprint.planned_velocity = @previous_sprint.actual_velocity if @previous_sprint.actual_velocity != nil
+
+		@sprint.code_coverage = @previous_sprint.code_coverage if @previous_sprint.code_coverage != nil
+		@sprint.nr_manual_tests = @previous_sprint.nr_manual_tests if @previous_sprint.nr_manual_tests != nil
+		@sprint.nr_automated_tests = @previous_sprint.nr_automated_tests if @previous_sprint.nr_automated_tests != nil
 	end
 
     respond_to do |format|

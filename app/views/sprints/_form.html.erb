@@ -1,10 +1,10 @@
 <%= form_for([@sprint.team, @sprint]) do |f| %>
-  <% if @team.errors.any? %>
+  <% if @sprint.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@team.errors.count, "error") %> prohibited this sprint from being saved:</h2>
 
       <ul>
-      <% @team.errors.full_messages.each do |msg| %>
+      <% @sprint.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -32,7 +32,7 @@
     <%= f.text_field :working_days %>
   </div>
   <div class="field">
-    <%= f.label :pto_days %>
+    <%= f.label "Out of office days" %>
     <%= f.text_field :pto_days %>
   </div>
 
@@ -62,6 +62,24 @@
     <%= f.label :partial_points %>
     <%= f.text_field :partial_points %>
   </div>
+	<h2>Tests</h2>
+
+  <div class="field">
+    <%= f.label :code_coverage %>
+    <%= f.number_field :code_coverage, :max => 100, :step => 0.1 %>
+	e.g. 33.5 means 33.5%
+  </div>
+
+  <div class="field">
+    <%= f.label "Number of Manual Tests" %>
+    <%= f.number_field :nr_manual_tests, :min => 0 %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Number of Automated Tests" %>
+    <%= f.number_field :nr_automated_tests, :min => 0 %>
+  </div>
+
   <div class="field">
     <%= f.label :note %>
     <%= f.text_area :note %>

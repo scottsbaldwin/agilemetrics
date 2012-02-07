@@ -108,6 +108,28 @@
           containerId: 'teamSizeTrend'
         };
 
+		var testsChart = {
+          chartType: 'ColumnChart',
+          dataTable: [['', 'Manual Tests', 'Automated Tests'],
+					<% last_sprints.each do |sprint| 
+							if sprint_is_complete?(sprint)
+					%>
+                      ['<%= sprint.sprint_name %>', <%= sprint.nr_manual_tests %>, <%= sprint.nr_automated_tests %>],
+					<% 		end 
+						end
+					%>
+			],
+          options: {'title': 'Tests',
+					vAxis: { gridlines: { count: 13 }, minValue: -1, maxValue: 11 },
+					titleTextStyle: { fontSize: 14 },
+					series: {
+						0: { color: 'Red' },
+						1: { color: 'CornflowerBlue' }
+					},
+					theme: 'maximized'},
+          containerId: 'testsTrend'
+        };
+
         var velocityWrapper = new google.visualization.ChartWrapper(velocityChart);
         velocityWrapper.draw();
         var efficiencyWrapper = new google.visualization.ChartWrapper(efficiencyChart);
@@ -116,6 +138,8 @@
         processWrapper.draw();
         var teamSizeWrapper = new google.visualization.ChartWrapper(teamSizeChart);
         teamSizeWrapper.draw();
+        var testsWrapper = new google.visualization.ChartWrapper(testsChart);
+        testsWrapper.draw();
       }
       google.setOnLoadCallback(drawVisualization);
     </script>
@@ -125,8 +149,11 @@
 		<td width="50%"><div id="efficiencyTrend"></div></td>
 		</tr>
 		<tr>
-		<td width="50%"><div id="processTrend"></div></td>
+		<td colspan="2"><div id="processTrend"></div></td>
+		</tr>
+		<tr>
 		<td width="50%"><div id="teamSizeTrend"></div></td>
+		<td width="50%"><div id="testsTrend"></div></td>
 		</tr>
 	</table>
 	<% end %>

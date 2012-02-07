@@ -13,6 +13,10 @@
 	<td class="alignNumber"><%= sprint.found_points %></td>
 	<td class="alignNumber"><%= sprint.partial_points %></td>
 
+	<td class="alignNumber"><%= sprint.code_coverage %></td>
+	<td class="alignNumber"><%= sprint.nr_manual_tests %></td>
+	<td class="alignNumber"><%= sprint.nr_automated_tests %></td>
+
     <td<%= ' colspan="3"' if !is_username_an_owner_of_team?(current_user.login, @team) -%> style="text-align:center"><%= link_to 'show', team_sprint_path(sprint.team, sprint) %></td>
 	<% if is_username_an_owner_of_team?(current_user.login, @team) -%>
     	<td style="text-align:center"><%= link_to 'edit', edit_team_sprint_path(sprint.team, sprint) %></td>

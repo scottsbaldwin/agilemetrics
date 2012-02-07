@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120202215720) do
+ActiveRecord::Schema.define(:version => 20120206232630) do
 
   create_table "sprints", :force => true do |t|
     t.string   "sprint_name"
@@ -26,9 +26,12 @@ ActiveRecord::Schema.define(:version => 20120202215720) do
     t.float    "found_points"
     t.float    "partial_points"
     t.integer  "team_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.text     "note"
+    t.float    "code_coverage",      :default => 0.0
+    t.integer  "nr_manual_tests",    :default => 0
+    t.integer  "nr_automated_tests", :default => 0
   end
 
   add_index "sprints", ["team_id"], :name => "index_sprints_on_team_id"
