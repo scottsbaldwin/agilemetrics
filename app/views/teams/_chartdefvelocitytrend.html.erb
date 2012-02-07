@@ -1,0 +1,27 @@
+		var velocityChart = {
+          chartType: 'LineChart',
+          dataTable: [['', 'Actual Velocity', 'Committed Velocity', 'Avg Velocity', 'Capacity', 'Trend'],
+					<%  last_sprints.each_with_index do |sprint, index| 
+							if sprint_is_complete?(sprint)
+					%>
+                      ['<%= sprint.sprint_name %>', <%= sprint.actual_velocity.round(1) %>, <%= committed_velocity(sprint).round(1) %>, <%= average_velocity(@team.sprints, sprint, 6).round(1) %>, <%= capacity(sprint).round(1) %>, <%= @linear_regression.predict(index).round(1) %>],
+					<% 		end 
+						end
+					%>
+			],
+          options: {'title': 'Velocity Trend', 
+					curveType: "function", 
+					vAxis: { gridlines: { count: 6 }, minValue: 0 },
+					titleTextStyle: { fontSize: 14 },
+					series: {
+						0: { lineWidth: 3, pointSize: 6, color: 'LimeGreen' },
+						1: { lineWidth: 3, pointSize: 6, color: 'Red' },
+						2: { lineWidth: 1, pointSize: 2, color: 'MediumPurple' },
+						3: { lineWidth: 1, pointSize: 2, color: 'CornflowerBlue' },
+						4: { lineWidth: 1, pointSize: 2, color: 'Orange' }
+					},
+					theme: 'maximized'},
+          containerId: 'velocityTrend'
+        };
+        var velocityWrapper = new google.visualization.ChartWrapper(velocityChart);
+        velocityWrapper.draw();

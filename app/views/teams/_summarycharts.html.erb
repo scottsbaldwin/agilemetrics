@@ -3,143 +3,18 @@
 	<%= render "sprints/summary" %>
 </div>
 <div id="charts">
-		<% last_sprints = last_n_sprints(@team.sprints, 10) %>
-		<% if last_sprints.size > 0 %>
+<% last_sprints = last_n_sprints(@team.sprints, 10) %>
+<% if last_sprints.size > 0 %>
     <script type="text/javascript">
       function drawVisualization() {
 
-		var velocityChart = {
-          chartType: 'LineChart',
-          dataTable: [['', 'Actual Velocity', 'Committed Velocity', 'Avg Velocity', 'Capacity', 'Trend'],
-					<%  last_sprints.each_with_index do |sprint, index| 
-							if sprint_is_complete?(sprint)
-					%>
-                      ['<%= sprint.sprint_name %>', <%= sprint.actual_velocity.round(1) %>, <%= committed_velocity(sprint).round(1) %>, <%= average_velocity(@team.sprints, sprint, 6).round(1) %>, <%= capacity(sprint).round(1) %>, <%= @linear_regression.predict(index).round(1) %>],
-					<% 		end 
-						end
-					%>
-			],
-          options: {'title': 'Velocity Trend', 
-					curveType: "function", 
-					vAxis: { gridlines: { count: 6 }, minValue: 0 },
-					titleTextStyle: { fontSize: 14 },
-					series: {
-						0: { lineWidth: 3, pointSize: 6, color: 'LimeGreen' },
-						1: { lineWidth: 3, pointSize: 6, color: 'Red' },
-						2: { lineWidth: 1, pointSize: 2, color: 'MediumPurple' },
-						3: { lineWidth: 1, pointSize: 2, color: 'CornflowerBlue' },
-						4: { lineWidth: 1, pointSize: 2, color: 'Orange' }
-					},
-					theme: 'maximized'},
-          containerId: 'velocityTrend'
-        };
+		<%= render :partial => "chartdefvelocitytrend", :locals => { :last_sprints => last_sprints } %>
+		<%= render :partial => "chartdefefficiencytrend", :locals => { :last_sprints => last_sprints } %>
+		<%= render :partial => "chartdefprocesstrend", :locals => { :last_sprints => last_sprints } %>
+		<%= render :partial => "chartdefteamsize", :locals => { :last_sprints => last_sprints } %>
+		<%= render :partial => "chartdeftests", :locals => { :last_sprints => last_sprints } %>
+		<%= render :partial => "chartdefcoverage", :locals => { :last_sprints => last_sprints } %>
 
-		var efficiencyChart = {
-          chartType: 'LineChart',
-          dataTable: [['', 'Actual Velocity Increase Factor', 'Velocity Efficiency Increase Factor', 'Baseline', 'Hyper Performing'],
-					<% last_sprints.each do |sprint| 
-							if sprint_is_complete?(sprint)
-					%>
-                      ['<%= sprint.sprint_name %>', <%= velocity_index(sprint, @first_sprint) %>, <%= velocity_efficiency(sprint, @first_sprint) %>, 1, 3],
-					<% 		end 
-						end
-					%>
-			],
-          options: {'title': 'Efficiency Trend',
-					curveType: "function", 
-					vAxis: { gridlines: { count: 15 }, minValue: -1, maxValue: 5 },
-					titleTextStyle: { fontSize: 14 },
-					series: {
-						0: { lineWidth: 3, pointSize: 6, color: 'MediumPurple' },
-						1: { lineWidth: 3, pointSize: 6, color: 'CornflowerBlue' },
-						2: { visibleInLegend: false, lineWidth: 1, pointSize: 0, color: 'Red' },
-						3: { visibleInLegend: false, lineWidth: 1, pointSize: 0, color: 'Green' }
-					},
-					theme: 'maximized'},
-          containerId: 'efficiencyTrend'
-        };
-
-		var processChart = {
-          chartType: 'LineChart',
-          dataTable: [['', 'Commitment Accuracy', 'Estimation Accuracy', 'Focus Factor', 'Unplanned', 'Unplanned Tolerance', 'Upper Tolerance'],
-					<% last_sprints.each do |sprint| 
-							if sprint_is_complete?(sprint)
-					%>
-                      ['<%= sprint.sprint_name %>', <%= commitment_accuracy(sprint) %>, <%= estimation_accuracy(sprint) %>, <%= focus_factor(sprint) %>, <%= unplanned_work_percent(sprint) %>, 20, 80],
-					<% 		end 
-						end
-					%>
-			],
-          options: {'title': 'Process Metrics Trend',
-					curveType: "function", 
-					vAxis: { gridlines: { count: 14 }, minValue: -10, maxValue: 120 },
-					titleTextStyle: { fontSize: 14 },
-					series: {
-						0: { lineWidth: 3, pointSize: 6, color: 'CornflowerBlue' },
-						1: { lineWidth: 3, pointSize: 6, color: 'Orange' },
-						2: { lineWidth: 2, pointSize: 6, color: 'MediumPurple' },
-						3: { lineWidth: 1, pointSize: 6, color: 'Green' },
-						4: { visibleInLegend: false, lineWidth: 1, pointSize: 0, color: 'red' },
-						5: { visibleInLegend: false, lineWidth: 1, pointSize: 0, color: 'red' }
-					},
-					theme: 'maximized'},
-          containerId: 'processTrend'
-        };
-
-		var teamSizeChart = {
-          chartType: 'ColumnChart',
-          dataTable: [['', 'Team Size'],
-					<% last_sprints.each do |sprint| 
-							if sprint_is_complete?(sprint)
-					%>
-                      ['<%= sprint.sprint_name %>', <%= sprint.team_size %>],
-					<% 		end 
-						end
-					%>
-			],
-          options: {'title': 'Team Size',
-					vAxis: { gridlines: { count: 13 }, minValue: -1, maxValue: 11 },
-					titleTextStyle: { fontSize: 14 },
-					legend: 'none',
-					series: {
-						0: { color: 'CornflowerBlue' }
-					},
-					theme: 'maximized'},
-          containerId: 'teamSizeTrend'
-        };
-
-		var testsChart = {
-          chartType: 'ColumnChart',
-          dataTable: [['', 'Manual Tests', 'Automated Tests'],
-					<% last_sprints.each do |sprint| 
-							if sprint_is_complete?(sprint)
-					%>
-                      ['<%= sprint.sprint_name %>', <%= sprint.nr_manual_tests %>, <%= sprint.nr_automated_tests %>],
-					<% 		end 
-						end
-					%>
-			],
-          options: {'title': 'Tests',
-					vAxis: { gridlines: { count: 11 }, minValue: 0 },
-					titleTextStyle: { fontSize: 14 },
-					series: {
-						0: { color: 'Red' },
-						1: { color: 'CornflowerBlue' }
-					},
-					theme: 'maximized'},
-          containerId: 'testsTrend'
-        };
-
-        var velocityWrapper = new google.visualization.ChartWrapper(velocityChart);
-        velocityWrapper.draw();
-        var efficiencyWrapper = new google.visualization.ChartWrapper(efficiencyChart);
-        efficiencyWrapper.draw();
-        var processWrapper = new google.visualization.ChartWrapper(processChart);
-        processWrapper.draw();
-        var teamSizeWrapper = new google.visualization.ChartWrapper(teamSizeChart);
-        teamSizeWrapper.draw();
-        var testsWrapper = new google.visualization.ChartWrapper(testsChart);
-        testsWrapper.draw();
       }
       google.setOnLoadCallback(drawVisualization);
     </script>
@@ -149,13 +24,14 @@
 		<td width="50%"><div id="efficiencyTrend"></div></td>
 		</tr>
 		<tr>
-		<td colspan="2"><div id="processTrend"></div></td>
+		<td width="50%"><div id="processTrend"></div></td>
+		<td width="50%"><div id="teamSizeTrend"></div></td>
 		</tr>
 		<tr>
-		<td width="50%"><div id="teamSizeTrend"></div></td>
 		<td width="50%"><div id="testsTrend"></div></td>
+		<td width="50%"><div id="coverageTrend"></div></td>
 		</tr>
 	</table>
-	<% end %>
+<% end %>
 </div>
 <div class="clear"></div>

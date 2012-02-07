@@ -1,0 +1,23 @@
+		var coverageChart = {
+          chartType: 'ColumnChart',
+          dataTable: [['', '% Coverage'],
+					<% last_sprints.each do |sprint| 
+							if sprint_is_complete?(sprint)
+					%>
+                      ['<%= sprint.sprint_name %>', <%= sprint.code_coverage %>],
+					<% 		end 
+						end
+					%>
+			],
+          options: {'title': 'Code Coverage Percentage',
+					vAxis: { gridlines: { count: 14 }, minValue: -10, maxValue: 120 },
+					titleTextStyle: { fontSize: 14 },
+					legend: 'none',
+					series: {
+						0: { color: 'Red' }
+					},
+					theme: 'maximized'},
+          containerId: 'coverageTrend'
+        };
+        var coverageWrapper = new google.visualization.ChartWrapper(coverageChart);
+        coverageWrapper.draw();

@@ -1,0 +1,28 @@
+		var processChart = {
+          chartType: 'LineChart',
+          dataTable: [['', 'Commitment Accuracy', 'Estimation Accuracy', 'Focus Factor', 'Unplanned', 'Unplanned Tolerance', 'Upper Tolerance'],
+					<% last_sprints.each do |sprint| 
+							if sprint_is_complete?(sprint)
+					%>
+                      ['<%= sprint.sprint_name %>', <%= commitment_accuracy(sprint) %>, <%= estimation_accuracy(sprint) %>, <%= focus_factor(sprint) %>, <%= unplanned_work_percent(sprint) %>, 20, 80],
+					<% 		end 
+						end
+					%>
+			],
+          options: {'title': 'Process Metrics Trend',
+					curveType: "function", 
+					vAxis: { gridlines: { count: 14 }, minValue: -10, maxValue: 120 },
+					titleTextStyle: { fontSize: 14 },
+					series: {
+						0: { lineWidth: 3, pointSize: 6, color: 'CornflowerBlue' },
+						1: { lineWidth: 3, pointSize: 6, color: 'Orange' },
+						2: { lineWidth: 2, pointSize: 6, color: 'MediumPurple' },
+						3: { lineWidth: 1, pointSize: 6, color: 'Green' },
+						4: { visibleInLegend: false, lineWidth: 1, pointSize: 0, color: 'red' },
+						5: { visibleInLegend: false, lineWidth: 1, pointSize: 0, color: 'red' }
+					},
+					theme: 'maximized'},
+          containerId: 'processTrend'
+        };
+        var processWrapper = new google.visualization.ChartWrapper(processChart);
+        processWrapper.draw();

@@ -1,0 +1,23 @@
+		var teamSizeChart = {
+          chartType: 'ColumnChart',
+          dataTable: [['', 'Team Size'],
+					<% last_sprints.each do |sprint| 
+							if sprint_is_complete?(sprint)
+					%>
+                      ['<%= sprint.sprint_name %>', <%= sprint.team_size %>],
+					<% 		end 
+						end
+					%>
+			],
+          options: {'title': 'Team Size',
+					vAxis: { gridlines: { count: 13 }, minValue: -1, maxValue: 11 },
+					titleTextStyle: { fontSize: 14 },
+					legend: 'none',
+					series: {
+						0: { color: 'CornflowerBlue' }
+					},
+					theme: 'maximized'},
+          containerId: 'teamSizeTrend'
+        };
+        var teamSizeWrapper = new google.visualization.ChartWrapper(teamSizeChart);
+        teamSizeWrapper.draw();

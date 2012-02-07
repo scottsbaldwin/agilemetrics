@@ -1,0 +1,23 @@
+		var testsChart = {
+          chartType: 'ColumnChart',
+          dataTable: [['', 'Manual Tests', 'Automated Tests'],
+					<% last_sprints.each do |sprint| 
+							if sprint_is_complete?(sprint)
+					%>
+                      ['<%= sprint.sprint_name %>', <%= sprint.nr_manual_tests %>, <%= sprint.nr_automated_tests %>],
+					<% 		end 
+						end
+					%>
+			],
+          options: {'title': 'Tests',
+					vAxis: { gridlines: { count: 11 }, minValue: 0 },
+					titleTextStyle: { fontSize: 14 },
+					series: {
+						0: { color: 'Red' },
+						1: { color: 'CornflowerBlue' }
+					},
+					theme: 'maximized'},
+          containerId: 'testsTrend'
+        };
+        var testsWrapper = new google.visualization.ChartWrapper(testsChart);
+        testsWrapper.draw();
