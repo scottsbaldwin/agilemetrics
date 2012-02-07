@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120206232630) do
+ActiveRecord::Schema.define(:version => 20120207180018) do
 
   create_table "sprints", :force => true do |t|
     t.string   "sprint_name"
@@ -39,10 +39,11 @@ ActiveRecord::Schema.define(:version => 20120206232630) do
   create_table "teams", :force => true do |t|
     t.string   "name"
     t.integer  "sprint_weeks"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.string   "owners"
-    t.boolean  "is_archived",  :default => false
+    t.boolean  "is_archived",        :default => false
+    t.integer  "test_certification", :default => 0
   end
 
   add_index "teams", ["name"], :name => "index_teams_on_name", :unique => true

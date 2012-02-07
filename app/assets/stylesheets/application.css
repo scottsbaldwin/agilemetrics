@@ -124,3 +124,49 @@ h2 {
   background: -webkit-gradient(linear,left top,left bottom,color-stop(0, #98ba40),color-stop(.35, #a6c250),color-stop(1, #618926));
   border: 1px solid #618926;
 }
+
+.testCertificationLevel {
+	display: inline-block;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	text-align: center;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	font-weight: bold;
+}
+
+.testCertificationLevel0 {
+	color: black;
+	background-color: Beige;
+	width: 16%;
+}
+
+.testCertificationLevel1 {
+	color: black;
+	background-color: #e0e9f9;
+	width: 32%;
+}
+
+.testCertificationLevel2 {
+	color: black;
+	background-color: #c1d4f6;
+	width: 48%;
+}
+
+.testCertificationLevel3 {
+	color: black;
+	background-color: #a2bff3;
+	width: 64%;
+}
+
+.testCertificationLevel4 {
+	color: white;
+	background-color: #83aaf0;
+	width: 80%;
+}
+
+.testCertificationLevel5 {
+	color: white;
+	background-color: #6495ed;
+	width: 96%;
+}

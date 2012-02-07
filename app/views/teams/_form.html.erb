@@ -29,6 +29,18 @@
     <%= f.label :is_archived %>
     <%= f.check_box :is_archived %>
   </div>
+  <% if user_signed_in? && is_super_admin?(current_user.login) -%>
+  <div class="field">
+    <%= f.label :test_certification %>
+	<%
+		options = []
+		(0..5).to_a.each do |i|
+			options << ["Level #{i}", i]
+		end
+	-%>
+	<%= f.select :test_certification, options %>
+  </div>
+  <% end -%>
   <div class="actions">
     <%= f.submit "Submit", :class => 'button large green' %>
   </div>

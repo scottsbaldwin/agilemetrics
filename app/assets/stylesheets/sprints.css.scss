@@ -36,7 +36,11 @@ table.sprints th.sprintInfo, table.sprints th.actuals, table.sprints th.tests {
 	width: 130px;
 }
 
-.field input, .field textarea {
+.field .indentField {
+	margin-left: 130px;
+}
+
+.field input, .field textarea, .field select {
 	border: 1px solid CornflowerBlue;
 	padding: 10px;
 	-moz-border-radius: 5px;
@@ -58,4 +62,8 @@ table.sprints th.sprintInfo, table.sprints th.actuals, table.sprints th.tests {
 	float: left;
 	margin: auto;
 	margin-right: 25px;
+}
+
+.leftAlign {
+	text-align: left !important;
 }

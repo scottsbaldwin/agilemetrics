@@ -12,6 +12,7 @@
     <th>Name</th>
     <th>Sprint Length</th>
     <th>Latest Sprint</th>
+    <th>Test Certification</th>
     <th>Admins</th>
     <th colspan="2">Actions</th>
   </tr>
@@ -28,6 +29,7 @@
 			<%= link_to latest_sprint.sprint_name, [team, latest_sprint] %>
 		<% end -%>
 	</td>
+	<td><%= render :partial => "testcert", :locals => { :level => team.test_certification, :width => 100 } %></td>
 	<td><%= team.owners %></td>
     <td style="text-align: center">
 		<% if user_signed_in? && is_username_an_owner_of_team?(current_user.login, team) -%>
@@ -47,6 +49,7 @@
     <th>Sprint Length</th>
     <th>Latest Sprint</th>
     <th>Admins</th>
+    <th>Test Certification</th>
     <th colspan="2">Actions</th>
   </tr>
 
@@ -62,6 +65,7 @@
 			<%= link_to latest_sprint.sprint_name, [team, latest_sprint] %>
 		<% end -%>
 	</td>
+	<td><%= render :partial => "testcert", :locals => { :level => team.test_certification, :width => 100 } %></td>
 	<td><%= team.owners %></td>
     <td style="text-align: center">
 		<% if user_signed_in? && is_username_an_owner_of_team?(current_user.login, team) -%>
