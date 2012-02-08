@@ -4,7 +4,7 @@
 					<%  last_sprints.each_with_index do |sprint, index| 
 							if sprint_is_complete?(sprint)
 					%>
-                      ['<%= sprint.sprint_name %>', <%= sprint.actual_velocity.round(1) %>, <%= committed_velocity(sprint).round(1) %>, <%= average_velocity(@team.sprints, sprint, 6).round(1) %>, <%= capacity(sprint).round(1) %>, <%= @linear_regression.predict(index).round(1) %>],
+                      ['<%= sprint.sprint_name %>', <%= sprint.actual_velocity.round(1) %>, <%= committed_velocity(sprint).round(1) %>, <%= rolling_average_velocity(@team.sprints, sprint, 6) %>, <%= capacity(sprint).round(1) %>, <%= @linear_regression.predict(index).round(1) %>],
 					<% 		end 
 						end
 					%>

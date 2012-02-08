@@ -1,4 +1,5 @@
 require 'linearregression'
+require 'enumextensions'
 
 module SprintsHelper
 	def man_days(sprint)
@@ -94,6 +95,15 @@ module SprintsHelper
 		complete_sprints.last max_nr
 	end
 
+	def last_n_sprints_inclusive(sprints, current_sprint, n)
+		# find the current sprint
+		idx = sprints.index { |sprint| sprint.sprint_name == current_sprint.sprint_name }
+		# get the set of the last n sprints
+		set = sprints[0, idx+1].last(n)
+		# get only those that are complete
+		set = last_n_sprints(set, n)
+	end
+
 	def last_complete_sprint(sprints)
 		completed = nil
 		sprints.reverse_each do |sprint|
@@ -164,21 +174,93 @@ module SprintsHelper
 		end
 	end
 
-	def average_velocity(sprints, current_sprint, n)
+	def rolling_average_velocity(sprints, current_sprint, n)
+		set = last_n_sprints_inclusive(sprints, current_sprint, n)
+		average_velocity(set)
+	end
 
-		# find the current sprint
-		idx = sprints.index { |sprint| sprint.sprint_name == current_sprint.sprint_name }
-		# get the set of the last n sprints
-		set = sprints[0, idx+1].last(n)
-		# find the average over the last n sprints
-		sum = 0
-		set.each { |sprint| sum += sprint.actual_velocity if sprint.actual_velocity != nil }
-		avg = 0
-		avg = sum / set.size if set.size > 0
+	def average_velocity(set)
+		values = set.map { |s| s.actual_velocity }
+		if values.length > 0
+			statsArray = StatisticalArray.new(values)
+			statsArray.average.round(1)
+		else
+			0
+		end
+	end
+
+	def average_capacity(set)
+		values = set.map { |s| capacity(s) }
+		if values.length > 0
+			statsArray = StatisticalArray.new(values)
+			statsArray.average.round(0)
+		else
+			0
+		end
+	end
+
+	def average_focus_factor(set)
+		values = set.map { |s| focus_factor(s) }
+		if values.length > 0
+			statsArray = StatisticalArray.new(values)
+			statsArray.average.round(0)
+		else
+			0
+		end
+	end
+
+	def average_commitment_accuracy(set)
+		values = set.map { |s| commitment_accuracy(s) }
+		if values.length > 0
+			statsArray = StatisticalArray.new(values)
+			statsArray.average.round(0)
+		else
+			0
+		end
+	end
+
+	def average_estimation_accuracy(set)
+		values = set.map { |s| estimation_accuracy(s) }
+		if values.length > 0
+			statsArray = StatisticalArray.new(values)
+			statsArray.average.round(0)
+		else
+			0
+		end
+	end
+
+	def average_unplanned_work(set)
+		values = set.map { |s| unplanned_work_percent(s) }
+		if values.length > 0
+			statsArray = StatisticalArray.new(values)
+			statsArray.average.round(0)
+		else
+			0
+		end
+	end
+
+	def average_velocity_efficiency(set, first_sprint)
+		values = set.map { |s| velocity_efficiency(s, first_sprint) }
+		if values.length > 0
+			statsArray = StatisticalArray.new(values)
+			statsArray.average.round(2)
+		else
+			0
+		end
 	end
 
 	def velocity_index(sprint, first_sprint)
 		idx = sprint.actual_velocity / first_sprint.actual_velocity
 		idx.round(2)
+	end
+
+	def confidence_interval(set)
+		values = set.map {|s| s.actual_velocity }
+		interval = "-"
+		if values.length > 5
+			statsArray = StatisticalArray.new(values)
+			interval = "%d - %d" % [ statsArray.confidence_interval_low, statsArray.confidence_interval_high ]
+		end
+		return interval
 	end
 end

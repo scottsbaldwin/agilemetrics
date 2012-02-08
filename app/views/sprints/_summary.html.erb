@@ -67,6 +67,50 @@ if @summary_sprint != nil
 <td>Velocity Efficiency Factor</td>
 <td class="alignNumber"><%= velocity_efficiency(@summary_sprint, @first_sprint) %></td>
 </tr>
+
+<tr>
+<th colspan="2">Averages (Last 6 Sprints)</th>
+</tr>
+
+<tr>
+<td>Velocity</td>
+<td class="alignNumber"><%= average_velocity(@averages_set) %></td>
+</tr>
+
+<tr>
+<td>90% Confidence Interval</td>
+<td class="alignNumber"><%= confidence_interval(@averages_set) %></td>
+</tr>
+
+<tr>
+<td>Capacity</td>
+<td class="alignNumber"><%= average_capacity(@averages_set) %></td>
+</tr>
+
+<tr>
+<td>Focus Factor</td>
+<td class="alignNumber"><%= number_to_percentage(average_focus_factor(@averages_set), :precision => 0) %></td>
+</tr>
+
+<tr>
+<td>Commitment Accuracy</td>
+<td class="alignNumber"><%= number_to_percentage(average_commitment_accuracy(@averages_set), :precision => 0) %></td>
+</tr>
+
+<tr>
+<td>Estimation Accuracy</td>
+<td class="alignNumber"><%= number_to_percentage(average_estimation_accuracy(@averages_set), :precision => 0) %></td>
+</tr>
+
+<tr>
+<td>Unplanned Work %</td>
+<td class="alignNumber"><%= number_to_percentage(average_unplanned_work(@averages_set), :precision => 0) %></td>
+</tr>
+
+<tr>
+<td>Velocity Efficiency Factor</td>
+<td class="alignNumber"><%= average_velocity_efficiency(@averages_set, @first_sprint) %></td>
+</tr>
 </tbody>
 </table>
 
