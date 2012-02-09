@@ -170,3 +170,73 @@ h2 {
 	background-color: #6495ed;
 	width: 96%;
 }
+
+/* Tooltip */
+
+a.nolink {
+	cursor: help;
+}
+
+.circleButtonSmall {
+	width: 16px;
+	height: 16px;
+	border-radius: 8px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	-khtml-border-radius: 8px;
+	font-size: 10px;
+	line-height: 16px;
+	text-align: center;
+	color: #fff;
+	background: Orange;
+	display: inline-block;
+}
+
+.circleButton {
+	width: 30px;
+	height: 30px;
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	-khtml-border-radius: 15px;
+	font-size: 15px;
+	line-height: 30px;
+	text-align: center;
+	color: #fff;
+	background: Orange;
+	display: inline-block;
+}
+
+.circleButton:hover, .circleButtonSmall:hover {
+	background: #12295d;
+}
+ 
+#tooltip {
+	border: 1px solid #12295d;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
+    position:absolute;
+    z-index:9999;
+    color:black;
+    font-size:10pt;
+    width:200px;
+    text-align: left;
+	line-height: normal;
+	padding: 10px;
+    background-color:#ddd;
+	text-transform: none;
+}
+ 
+#tooltip .tipHeader {
+}
+ 
+/* IE hack */
+*html #tooltip .tipHeader {margin-bottom:-6px;}
+ 
+#tooltip .tipBody {
+}
+ 
+#tooltip .tipFooter {
+}

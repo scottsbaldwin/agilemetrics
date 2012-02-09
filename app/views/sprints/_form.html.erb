@@ -11,6 +11,7 @@
     </div>
   <% end %>
 
+	<%= render :partial => "sprints/tooltipjs" %>
 	<h2>Sprint Info</h2>
 
   <div class="field">
@@ -26,41 +27,50 @@
   <div class="field">
     <%= f.label :team_size %>
     <%= f.text_field :team_size %>
+	<a rel="tooltip" class="nolink circleButton" title="<%= render "sprints/tipteamsize" %>">?</a>
   </div>
   <div class="field">
     <%= f.label :working_days %>
     <%= f.text_field :working_days %>
+	<a rel="tooltip" class="nolink circleButton" title="<%= render "sprints/tipworkingdays" %>">?</a>
   </div>
   <div class="field">
     <%= f.label "Out of office days" %>
     <%= f.text_field :pto_days %>
+	<a rel="tooltip" class="nolink circleButton" title="<%= render "sprints/tipptodays" %>">?</a>
   </div>
 
 	<h2>Actuals</h2>
 
-  <div class="field">
-    <%= f.label :planned_velocity %>
+  <div class="field" style="width: 100%">
+	<%= f.label :planned_velocity %>
     <%= f.text_field :planned_velocity %>
+	<a rel="tooltip" class="nolink circleButton" title="<%= render "sprints/tipplanned" %>">?</a>
   </div>
   <div class="field">
     <%= f.label :actual_velocity %>
     <%= f.text_field :actual_velocity %>
+	<a rel="tooltip" class="nolink circleButton" title="<%= render "sprints/tipactualvelocity" %>">?</a>
   </div>
   <div class="field">
     <%= f.label :adopted_points %>
     <%= f.text_field :adopted_points %>
+	<a rel="tooltip" class="nolink circleButton" title="<%= render "sprints/tipadopted" %>">?</a>
   </div>
   <div class="field">
     <%= f.label :unplanned_points %>
     <%= f.text_field :unplanned_points %>
+	<a rel="tooltip" class="nolink circleButton" title="<%= render "sprints/tipunplanned" %>">?</a>
   </div>
   <div class="field">
     <%= f.label :found_points %>
     <%= f.text_field :found_points %>
+	<a rel="tooltip" class="nolink circleButton" title="<%= render "sprints/tipfound" %>">?</a>
   </div>
   <div class="field">
     <%= f.label :partial_points %>
     <%= f.text_field :partial_points %>
+	<a rel="tooltip" class="nolink circleButton" title="<%= render "sprints/tippartial" %>">?</a>
   </div>
 	<h2>Tests</h2>
 
