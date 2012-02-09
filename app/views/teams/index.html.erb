@@ -5,7 +5,7 @@
 
 <table>
   <tr>
-	<th colspan="6">Active Teams</th>
+	<th colspan="7">Active Teams</th>
   </tr>
 
   <tr>
@@ -13,11 +13,16 @@
     <th>Sprint Length</th>
     <th>Latest Sprint</th>
     <th>Test Certification</th>
+	<th>Velocity Trend</th>
     <th>Admins</th>
     <th colspan="2">Actions</th>
   </tr>
 
-<% @active_teams.each do |team| %>
+<% @active_teams.each do |team| 
+	linear_regression = get_linear_regression_actual_velocity(team.sprints, team.sprints.find(:last))
+	trend_rate = velocity_growth(linear_regression)
+	style_color = trend_rate.include?("-") ? "color:red" : ""
+%>
   <tr>
     <td><%= link_to team.name, team %></td>
     <td style="text-align: center"><%= pluralize team.sprint_weeks, "week" %></td>
@@ -30,6 +35,7 @@
 		<% end -%>
 	</td>
 	<td><%= render :partial => "testcert", :locals => { :level => team.test_certification, :width => 100 } %></td>
+	<td style="text-align: center;<%= style_color %>"><%= trend_rate %></td>
 	<td><%= team.owners %></td>
     <td style="text-align: center">
 		<% if user_signed_in? && is_username_an_owner_of_team?(current_user.login, team) -%>
@@ -41,19 +47,24 @@
 
 <% if @archived_teams.length > 0 -%>
   <tr>
-	<th colspan="6">Archived Teams</th>
+	<th colspan="7">Archived Teams</th>
   </tr>
 
   <tr>
     <th>Name</th>
     <th>Sprint Length</th>
     <th>Latest Sprint</th>
-    <th>Admins</th>
     <th>Test Certification</th>
+	<th>Velocity Trend</th>
+    <th>Admins</th>
     <th colspan="2">Actions</th>
   </tr>
 
-<% @archived_teams.each do |team| %>
+<% @archived_teams.each do |team|
+	linear_regression = get_linear_regression_actual_velocity(team.sprints, team.sprints.find(:last))
+	trend_rate = velocity_growth(linear_regression)
+	style_color = trend_rate.include?("-") ? "color:red" : ""
+%>
   <tr>
     <td><%= link_to team.name, team %></td>
     <td style="text-align: center"><%= pluralize team.sprint_weeks, "week" %></td>
@@ -66,6 +77,7 @@
 		<% end -%>
 	</td>
 	<td><%= render :partial => "testcert", :locals => { :level => team.test_certification, :width => 100 } %></td>
+	<td style="text-align: center;<%= style_color %>"><%= trend_rate %></td>
 	<td><%= team.owners %></td>
     <td style="text-align: center">
 		<% if user_signed_in? && is_username_an_owner_of_team?(current_user.login, team) -%>

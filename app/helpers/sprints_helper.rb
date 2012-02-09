@@ -52,8 +52,9 @@ module SprintsHelper
 		prefix = "+" if rate > 0
 		# get rid of the - sign when the unrounded number was negative
 		rate = 0 if rate == 0
-		pluralize "%s%s" % [ prefix, rate ], "pt"
-		
+		growth = ""
+		growth = pluralize "%s%s" % [ prefix, rate ], "pt" if !rate.to_f.nan?
+		growth
 	end
 
 	def maintain_target(sprints, sprint)
