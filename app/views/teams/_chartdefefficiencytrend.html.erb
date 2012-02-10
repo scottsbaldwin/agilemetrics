@@ -1,6 +1,6 @@
 		var efficiencyChart = {
           chartType: 'LineChart',
-          dataTable: [['', 'Actual Velocity Increase Factor', 'Velocity Efficiency Increase Factor', 'Baseline', 'Hyper Performing'],
+          dataTable: [['', 'Velocity Increase Factor', 'Velocity Efficiency Increase Factor', 'Baseline', 'Hyper Performing'],
 					<% last_sprints.each do |sprint| 
 							if sprint_is_complete?(sprint)
 					%>
@@ -9,7 +9,7 @@
 						end
 					%>
 			],
-          options: {'title': 'Efficiency Trend',
+          options: {'title': 'Velocity Improvement Trend',
 					curveType: "function", 
 					vAxis: { gridlines: { count: 15 }, minValue: -1, maxValue: 5 },
 					titleTextStyle: { fontSize: 14 },
