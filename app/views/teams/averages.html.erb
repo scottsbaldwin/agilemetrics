@@ -1,0 +1,54 @@
+<h1>Team Averages</h1>
+
+<div style="margin-bottom: 10px">
+<%= link_to "back to teams", teams_path %>
+</div>
+
+<table>
+<% 
+groups = [@active_teams, @archived_teams]
+groups.each_with_index do |group, index|
+%>
+<% if group.length > 0 %>
+<tr>
+<th colspan="7"><%= index == 0 ? "Active" : "Archived" %> Teams</th>
+</tr>
+
+<tr>
+<th>Team</th>
+<th>Velocity Trend</th>
+<th>Focus Factor</th>
+<th>Commitment Accuracy</th>
+<th>Estimation Accuracy</th>
+<th>Unplanned Work</th>
+<th>Velocity Efficiency</th>
+</tr>
+<% end %>
+
+<% group.each do |team|
+	linear_regression = get_linear_regression_actual_velocity(team.sprints, team.sprints.find(:last))
+	trend_rate = velocity_growth(linear_regression)
+	style_color = trend_rate.include?("-") ? "color:red" : ""
+
+	first_sprint = team.sprints.find(:first)
+	summary_sprint = last_complete_sprint(team.sprints)
+	averages_set = last_n_sprints_inclusive(team.sprints, summary_sprint, 6)
+
+	avg_focus_factor = average_focus_factor(averages_set)
+	avg_commitment_accuracy = average_commitment_accuracy(averages_set)
+	avg_estimation_accuracy = average_estimation_accuracy(averages_set)
+	avg_unplanned_work = average_unplanned_work(averages_set)
+	avg_velocity_efficiency = average_velocity_efficiency(averages_set, first_sprint)
+%>
+<tr>
+<td><%= link_to team.name, team %></td>
+<td style="text-align: center;<%= style_color %>"><%= trend_rate %></td>
+<td class="alignNumber <%= get_css_class_for_upper_threshold(avg_focus_factor) %>"><%= number_to_percentage(avg_focus_factor, :precision => 0) %></td>
+<td class="alignNumber <%= get_css_class_for_upper_threshold(avg_commitment_accuracy) %>"><%= number_to_percentage(avg_commitment_accuracy, :precision => 0) %></td>
+<td class="alignNumber <%= get_css_class_for_upper_threshold(avg_estimation_accuracy) %>"><%= number_to_percentage(avg_estimation_accuracy, :precision => 0) %></td>
+<td class="alignNumber <%= get_css_class_for_lower_threshold(avg_unplanned_work) %>"><%= number_to_percentage(avg_unplanned_work, :precision => 0) %></td>
+<td class="alignNumber <%= get_css_class_for_velocity_efficiency(avg_velocity_efficiency) %>"><%= avg_velocity_efficiency %></td>
+</tr>
+<% end %>
+<% end %>
+</table>

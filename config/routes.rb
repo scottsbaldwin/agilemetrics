@@ -5,6 +5,8 @@ Agilemetrics::Application.routes.draw do
 	resources :sprints
   end
 
+  match 'averages' => 'teams#averages', :as => "team_averages"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

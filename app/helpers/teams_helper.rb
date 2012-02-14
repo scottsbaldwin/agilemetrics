@@ -10,4 +10,31 @@ module TeamsHelper
 		
 		return result
 	end
+
+	def get_css_class_for_upper_threshold(value)
+		if value >= 80
+			css_class = "ok"
+		else
+			css_class = "poor"
+		end
+		css_class
+	end
+
+	def get_css_class_for_lower_threshold(value)
+		if value < 20
+			css_class = "ok"
+		else
+			css_class = "poor"
+		end
+		css_class
+	end
+
+	def get_css_class_for_velocity_efficiency(value)
+		if value < 1
+			css_class = "poor"
+		else
+			css_class = "ok"
+		end
+		css_class
+	end
 end

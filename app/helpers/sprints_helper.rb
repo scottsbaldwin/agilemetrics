@@ -99,6 +99,9 @@ module SprintsHelper
 	def last_n_sprints_inclusive(sprints, current_sprint, n)
 		# find the current sprint
 		idx = sprints.index { |sprint| sprint.sprint_name == current_sprint.sprint_name }
+		if idx == nil
+			return []
+		end
 		# get the set of the last n sprints
 		set = sprints[0, idx+1].last(n)
 		# get only those that are complete
