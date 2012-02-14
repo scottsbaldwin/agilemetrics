@@ -14,10 +14,10 @@ en:
   devise:
     failure:
       already_authenticated: 'You are already signed in.'
-      unauthenticated: 'You need to sign in to access your metrics.'
+      unauthenticated: 'You need to sign in to access your metrics. Use your domain username (without the domain).'
       unconfirmed: 'You have to confirm your account before continuing.'
       locked: 'Your account is locked.'
-      invalid: 'Invalid login or password.'
+      invalid: 'Invalid username or password.'
       invalid_token: 'Invalid authentication token.'
       timeout: 'Your session expired, please sign in again to continue.'
       inactive: 'Your account was not activated yet.'
