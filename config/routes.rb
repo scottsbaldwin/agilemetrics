@@ -6,6 +6,7 @@ Agilemetrics::Application.routes.draw do
   end
 
   match 'averages' => 'teams#averages', :as => "team_averages"
+  match 'checklist' => 'checklist#index', :as => "checklist"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
