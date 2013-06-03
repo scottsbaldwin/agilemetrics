@@ -1,7 +1,7 @@
 class AddOwnersToTeams < ActiveRecord::Migration
   def up
 	add_column :teams, :owners, :string
-	Team.update_all ["owners = ?", 'jesser, sbaldwin']
+	Team.update_all ["owners = ?", 'admin']
   end
 
   def down
