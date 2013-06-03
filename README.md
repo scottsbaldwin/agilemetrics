@@ -26,8 +26,8 @@ rake db:setup
 
 The database seed file (db/seeds.rb) will create a single user:
 
-Username: admin
-Password: admin
+- Username: admin
+- Password: admin
 
 Currently there is no way in the application to add more users from the web UI. Add more users in the seed file and re-run the database migration scripts.
 
