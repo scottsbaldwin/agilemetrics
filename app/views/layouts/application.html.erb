@@ -15,12 +15,14 @@
 <body>
 <%
 username = 'User'
-if !current_user.first_name.nil?
-  username = current_user.first_name
-elsif !current_user.login.nil?
-  username = current_user.login
-else
-  username = current_user.email
+if user_signed_in?
+  if !current_user.first_name.nil?
+    username = current_user.first_name
+  elsif !current_user.login.nil?
+    username = current_user.login
+  else
+    username = current_user.email
+  end
 end
 %>
 <div id="head">
