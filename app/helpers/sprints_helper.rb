@@ -98,7 +98,7 @@ module SprintsHelper
 
 	def last_n_sprints_inclusive(sprints, current_sprint, n)
 		# find the current sprint
-		idx = sprints.index { |sprint| sprint.sprint_name == current_sprint.sprint_name }
+		idx = sprints.index { |sprint| !sprint.nil? && !current_sprint.nil? && sprint.sprint_name == current_sprint.sprint_name }
 		if idx == nil
 			return []
 		end
