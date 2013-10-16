@@ -259,3 +259,112 @@ a.nolink {
 	border-top: 1px dotted #bbb;
 	margin-top: 15px;
 }
+
+
+table {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+table th {
+	background-color: #454545;
+	color: #eee;
+	font-weight: normal;
+	text-transform: lowercase;
+}
+
+table th, table td {
+	border: 1px solid #ddd;
+	padding: 5px;
+}
+
+table.sprints th.sprintInfo, table.sprints th.actuals, table.sprints th.tests {
+	background-color: CornflowerBlue;
+}
+
+.alignNumber {
+	text-align: center;
+}
+
+.effectiveTeamSize {
+	background-color: #eee;
+}
+
+.field label {
+	display: inline-block;
+	vertical-align: top;
+	width: 130px;
+}
+
+.field .indentField {
+	margin-left: 130px;
+}
+
+.field input, .field textarea, .field select {
+	border: 1px solid CornflowerBlue;
+	padding: 10px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	font-size: 12pt;
+	text-align: right;
+}
+
+.field textarea {
+	text-align: left !important;
+}
+
+.actions {
+	margin-left: 130px;
+	padding: 3px;
+}
+
+.column {
+	float: left;
+	margin: auto;
+	margin-right: 25px;
+}
+
+.leftAlign {
+	text-align: left !important;
+}
+
+
+#summary {
+	float: left;
+	max-width: 250px;
+}
+
+#charts {
+	margin-left: 250px;
+}
+
+#velocityTrend, #efficiencyTrend, #processTrend, #teamSizeTrend, #testsTrend, #coverageTrend {
+	width: 100%;
+	height: 300px;
+}
+
+.clear {
+	clear: both;
+}
+
+.target {
+	font-family: 'Raleway', cursive;
+	font-size: 48px;
+	color: CornflowerBlue;
+	text-transform: lowercase;
+	text-align: center;
+	height: 60px;
+}
+
+.teamHeading, .teamHeading td {
+	border: none;
+	padding: 10px;
+}
+
+.ok {
+	
+}
+
+.poor {
+	color: red;
+}
