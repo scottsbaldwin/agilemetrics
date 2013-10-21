@@ -40,6 +40,7 @@ class TeamsController < ApplicationController
   def new
     @team = Team.new
     @team.owners = current_user.login if current_user != nil
+    @team.build_trello_account
 
     respond_to do |format|
       format.html # new.html.erb
