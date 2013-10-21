@@ -7,4 +7,5 @@ class Team < ActiveRecord::Base
 	has_many :sprints, -> { order("sprint_name asc, end_date asc") }, :dependent => :destroy
 
 	has_one :trello_account, dependent: :destroy
+	accepts_nested_attributes_for :trello_account, reject_if: lambda { |attrs| attrs[:public_key].empty? && attrs[:read_token].empty? && attrs[:board_id].empty? && attrs[:list_name_for_backlog].empty? }
 end

@@ -41,6 +41,29 @@
 	<%= f.select :test_certification, options %>
   </div>
   <% end -%>
+
+  <%= f.fields_for :trello_account do |trello_form| %>
+    <div class="field">
+      <%= trello_form.label :public_key, "Trello public key" %>
+      <%= trello_form.text_field :public_key %>
+    </div>
+
+    <div class="field">
+      <%= trello_form.label :read_token, "Trello read token" %>
+      <%= trello_form.text_field :read_token %>
+    </div>
+
+    <div class="field">
+      <%= trello_form.label :board_id, "Trello board ID" %>
+      <%= trello_form.text_field :board_id %>
+    </div>
+
+    <div class="field">
+      <%= trello_form.label :list_name_for_backlog, "Trello backlog list name" %>
+      <%= trello_form.text_field :list_name_for_backlog %>
+    </div>
+  <% end %>
+
   <div class="actions">
     <%= f.submit "Submit", :class => 'button large green' %>
   </div>

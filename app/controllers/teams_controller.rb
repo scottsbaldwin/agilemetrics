@@ -48,6 +48,7 @@ class TeamsController < ApplicationController
   end
 
   def edit
+    @team.build_trello_account if @team.trello_account.nil?
   end
 
   def create
@@ -90,6 +91,6 @@ class TeamsController < ApplicationController
   end
 
   def team_params
-    params.require(:team).permit(:name, :sprint_weeks, :owners, :is_archived, :test_certification)
+    params.require(:team).permit(:name, :sprint_weeks, :owners, :is_archived, :test_certification, trello_account_attributes: [:public_key, :read_token, :board_id, :list_name_for_backlog])
   end
 end
