@@ -1,6 +1,7 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
+  config.secret_key = "a273ae60dc486acf221f9e4dfe3649cbab51d8c28369a4894737cfc53cb98de9d6bd521be777c1f32a9987078c5799efd2b1287efdf91388654c678e4b827b65"
   # ==> LDAP Configuration 
   #config.ldap_logger = true
   #config.ldap_create_user = true
@@ -107,7 +108,7 @@ Devise.setup do |config|
 
   # If true, uses the password salt as remember token. This should be turned
   # to false if you are not using database authenticatable.
-  config.use_salt_as_remember_token = false
+  # config.use_salt_as_remember_token = false
 
   # Options to be passed to the created cookie. For instance, you can set
   # :secure => true in order to force SSL only cookies.

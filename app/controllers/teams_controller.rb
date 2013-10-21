@@ -1,11 +1,11 @@
 class TeamsController < ApplicationController
-	include SprintsHelper
-  # GET /teams
-  # GET /teams.json
+  before_action :set_team, only: [:show, :edit, :update, :destroy]
+  include SprintsHelper
+
   def index
     @teams = Team.order("UPPER(name) asc")
-	@active_teams = @teams.where(:is_archived => false)
-	@archived_teams = @teams.where(:is_archived => true)
+    @active_teams = @teams.where(:is_archived => false)
+    @archived_teams = @teams.where(:is_archived => true)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,10 +13,7 @@ class TeamsController < ApplicationController
     end
   end
 
-  # GET /teams/1
-  # GET /teams/1.json
   def show
-    @team = Team.find(params[:id])
     @summary_sprint = last_complete_sprint(@team.sprints)
     @first_sprint = @team.sprints.find(:first)
     @last_sprint = @team.sprints.find(:last)
@@ -29,12 +26,10 @@ class TeamsController < ApplicationController
     end
   end
 
-  # GET /averages
-  # GET /averages.json
   def averages
     @teams = Team.order("UPPER(name) asc")
-	@active_teams = @teams.where(:is_archived => false)
-	@archived_teams = @teams.where(:is_archived => true)
+    @active_teams = @teams.where(:is_archived => false)
+    @archived_teams = @teams.where(:is_archived => true)
 
     respond_to do |format|
       format.html # averages.html.erb
@@ -42,11 +37,9 @@ class TeamsController < ApplicationController
     end
   end
 
-  # GET /teams/new
-  # GET /teams/new.json
   def new
     @team = Team.new
-	@team.owners = current_user.login if current_user != nil
+    @team.owners = current_user.login if current_user != nil
 
     respond_to do |format|
       format.html # new.html.erb
@@ -54,16 +47,11 @@ class TeamsController < ApplicationController
     end
   end
 
-  # GET /teams/1/edit
   def edit
-    @team = Team.find(params[:id])
   end
 
-  # POST /teams
-  # POST /teams.json
   def create
-    @team = Team.new(params[:team])
-
+    @team = Team.new(team_params)
     respond_to do |format|
       if @team.save
         format.html { redirect_to @team, notice: 'Team was successfully created.' }
@@ -75,13 +63,9 @@ class TeamsController < ApplicationController
     end
   end
 
-  # PUT /teams/1
-  # PUT /teams/1.json
   def update
-    @team = Team.find(params[:id])
-
     respond_to do |format|
-      if @team.update_attributes(params[:team])
+      if @team.update(team_params)
         format.html { redirect_to @team, notice: 'Team was successfully updated.' }
         format.json { head :no_content }
       else
@@ -91,15 +75,21 @@ class TeamsController < ApplicationController
     end
   end
 
-  # DELETE /teams/1
-  # DELETE /teams/1.json
   def destroy
-    @team = Team.find(params[:id])
     @team.destroy
-
     respond_to do |format|
       format.html { redirect_to teams_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def set_team
+    @team = Team.find(params[:id])
+  end
+
+  def team_params
+    params.require(:team).permit(:name, :sprint_weeks, :owners, :is_archived, :test_certification)
   end
 end

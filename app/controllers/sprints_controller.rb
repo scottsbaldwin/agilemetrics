@@ -1,15 +1,14 @@
 class SprintsController < ApplicationController
-	include SprintsHelper
-  # GET /teams/1/sprints/1
-  # GET /teams/1/spritns/1.json
+  before_action :set_team, only: [:show, :new, :create, :edit, :update, :destroy]
+  before_action :set_sprint, only: [:show, :edit, :update, :destroy]
+  include SprintsHelper
+
   def show
-	@team = Team.find(params[:team_id])
-	@sprint = @team.sprints.find(params[:id])
-	@summary_sprint = @sprint
-	@first_sprint = @team.sprints.find(:first)
-	@last_sprint = @team.sprints.find(:last)
-	@linear_regression = get_linear_regression_actual_velocity(@team.sprints, @last_sprint)
-	@averages_set = last_n_sprints_inclusive(@team.sprints, @summary_sprint, 6)
+    @summary_sprint = @sprint
+    @first_sprint = @team.sprints.find(:first)
+    @last_sprint = @team.sprints.find(:last)
+    @linear_regression = get_linear_regression_actual_velocity(@team.sprints, @last_sprint)
+    @averages_set = last_n_sprints_inclusive(@team.sprints, @summary_sprint, 6)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -17,11 +16,8 @@ class SprintsController < ApplicationController
     end
   end
 
-  # GET /teams/1/sprints/new
-  # GET /teams/1/sprints/new.json
   def new
-	@team = Team.find(params[:team_id])
-	@previous_sprint = @team.sprints.find(:last)
+    @previous_sprint = @team.sprints.find(:last)
     @sprint = @team.sprints.new
 
 	# guess the sprint name and end date
@@ -47,39 +43,43 @@ class SprintsController < ApplicationController
     end
   end
 
-	# GET /teams/1/sprints/1/edit
-	def edit
-		@team = Team.find(params[:team_id])
-		@sprint = @team.sprints.find(params[:id])
-	end
+  def edit
+  end
 
-	def create
-		@team = Team.find(params[:team_id])
-		@sprint = @team.sprints.create(params[:sprint])
-		redirect_to team_path(@team)
-	end
+  def create
+    @sprint = @team.sprints.create(sprint_params)
+    redirect_to team_path(@team)
+  end
 
-	# PUT /teams/1/sprints/1
-	# PUT /teams/1/sprints/1.json
-	def update
-		@team = Team.find(params[:team_id])
-		@sprint = @team.sprints.find(params[:id])
+  def update
+    respond_to do |format|
+      if @sprint.update(sprint_params)
+	format.html { redirect_to [@sprint.team, @sprint], notice: 'Sprint was successfully updated.' }
+	format.json { head :no_content }
+      else
+	format.html { render action: "edit" }
+	format.json { render json: @sprint.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
-		respond_to do |format|
-			if @sprint.update_attributes(params[:sprint])
-				format.html { redirect_to [@sprint.team, @sprint], notice: 'Sprint was successfully updated.' }
-				format.json { head :no_content }
-			else
-				format.html { render action: "edit" }
-				format.json { render json: @sprint.errors, status: :unprocessable_entity }
-			end
-		end
-	end
+  def destroy
+    @sprint.destroy
+    redirect_to team_path(@team)
+  end
 
-	def destroy
-		@team = Team.find(params[:team_id])
-		@sprint = @team.sprints.find(params[:id])
-		@sprint.destroy
-		redirect_to team_path(@team)
-	end
+  private
+
+  def set_team
+    @team = Team.find(params[:team_id])
+  end
+
+  def set_sprint
+    @sprint = @team.sprints.find(params[:id])
+  end
+
+  def sprint_params
+    params.require(:sprint).permit(:sprint_name, :end_date, :team_size, :working_days, :pto_days, :planned_velocity, :actual_velocity, :adopted_points, :unplanned_points, :found_points, :partial_points, :code_coverage, :nr_automated_tests, :note)
+  end
+
 end
