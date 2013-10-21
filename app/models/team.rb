@@ -4,7 +4,7 @@ class Team < ActiveRecord::Base
 				:numericality => { :less_than => 3, :greater_than => 0 }
 	validates :test_certification, :numericality => { :greater_than_or_equal_to => 0, :less_than_or_equal_to => 5, :only_integer => true }
 
-	has_many :sprints, 
-		:order => "sprint_name asc, end_date asc",
-		:dependent => :destroy
+	has_many :sprints, -> { order("sprint_name asc, end_date asc") }, :dependent => :destroy
+
+	has_one :trello_account, dependent: :destroy
 end

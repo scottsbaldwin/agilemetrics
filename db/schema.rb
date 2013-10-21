@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20120207180018) do
+ActiveRecord::Schema.define(version: 20131021202645) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,16 @@ ActiveRecord::Schema.define(version: 20120207180018) do
   end
 
   add_index "teams", ["name"], name: "index_teams_on_name", unique: true, using: :btree
+
+  create_table "trello_accounts", force: true do |t|
+    t.string  "public_key"
+    t.string  "read_token"
+    t.string  "board_id"
+    t.string  "list_name_for_backlog"
+    t.integer "team_id"
+  end
+
+  add_index "trello_accounts", ["team_id"], name: "index_trello_accounts_on_team_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
