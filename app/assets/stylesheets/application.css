@@ -222,7 +222,7 @@ a.nolink {
 }
  
 
-*html #tooltip .tipHeader {margin-bottom:-6px;}
+#tooltip .tipHeader {margin-bottom:-6px;}
  
 #tooltip .tipBody {
 }
