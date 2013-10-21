@@ -9,11 +9,14 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120207180018) do
+ActiveRecord::Schema.define(version: 20120207180018) do
 
-  create_table "sprints", :force => true do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "sprints", force: true do |t|
     t.string   "sprint_name"
     t.date     "end_date"
     t.float    "team_size"
@@ -26,47 +29,48 @@ ActiveRecord::Schema.define(:version => 20120207180018) do
     t.float    "found_points"
     t.float    "partial_points"
     t.integer  "team_id"
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.text     "note"
-    t.float    "code_coverage",      :default => 0.0
-    t.integer  "nr_manual_tests",    :default => 0
-    t.integer  "nr_automated_tests", :default => 0
+    t.float    "code_coverage",      default: 0.0
+    t.integer  "nr_manual_tests",    default: 0
+    t.integer  "nr_automated_tests", default: 0
   end
 
-  add_index "sprints", ["team_id"], :name => "index_sprints_on_team_id"
+  add_index "sprints", ["team_id"], name: "index_sprints_on_team_id", using: :btree
 
-  create_table "teams", :force => true do |t|
+  create_table "teams", force: true do |t|
     t.string   "name"
     t.integer  "sprint_weeks"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "owners"
-    t.boolean  "is_archived",        :default => false
-    t.integer  "test_certification", :default => 0
+    t.boolean  "is_archived",        default: false
+    t.integer  "test_certification", default: 0
   end
 
-  add_index "teams", ["name"], :name => "index_teams_on_name", :unique => true
+  add_index "teams", ["name"], name: "index_teams_on_name", unique: true, using: :btree
 
-  create_table "users", :force => true do |t|
-    t.string   "email",                              :default => "", :null => false
-    t.string   "encrypted_password",  :limit => 128, :default => "", :null => false
-    t.string   "remember_token"
-
+  create_table "users", force: true do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                      :default => 0
+    t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "first_name"
     t.string   "last_name"
-    t.datetime "created_at",                                         :null => false
-    t.datetime "updated_at",                                         :null => false
-    t.string   "login",                              :default => "", :null => false
-
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "login",                  default: "", null: false
   end
 
-  add_index "users", ["login"], :name => "index_users_on_login", :unique => true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["login"], name: "index_users_on_login", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
