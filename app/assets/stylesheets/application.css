@@ -1,8 +1,13 @@
 body {
-	margin: 0px;
-	padding: 0px;
-	background-color: #ddd !important;
+  margin: 0px;
+  padding: 0px;
+  background-color: #ddd !important;
+  color: #333;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
 }
+
 
 #head {
 	height: 125px;
@@ -243,3 +248,151 @@ a.nolink {
 	border-top: 1px dotted #bbb;
 	margin-top: 15px;
 }
+
+a { color: #000; }
+a:visited { color: #666; }
+a:hover { color: #fff; background-color: #000; }
+
+pre { background-color: #eee; padding: 10px; font-size: 11px; }
+p, ol, ul, td { font-family: verdana, arial, helvetica, sans-serif; font-size: 13px; line-height: 18px; }
+div.field, div.actions { margin-bottom: 10px; }
+#notice { color: green; }
+
+.field_with_errors { padding: 2px; background-color: red; display: table; }
+
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  margin-bottom: 0px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#error_explanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+/* sprint */
+
+table {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+table th {
+	background-color: #454545;
+	color: #eee;
+	font-weight: normal;
+	text-transform: lowercase;
+}
+
+table th, table td {
+	border: 1px solid #ddd;
+	padding: 5px;
+}
+
+table.sprints th.sprintInfo, table.sprints th.actuals, table.sprints th.tests {
+	background-color: CornflowerBlue;
+}
+
+.alignNumber {
+	text-align: center;
+}
+
+.effectiveTeamSize {
+	background-color: #eee;
+}
+
+.field label {
+	display: inline-block;
+	vertical-align: top;
+	width: 130px;
+}
+
+.field .indentField {
+	margin-left: 130px;
+}
+
+.field input, .field textarea, .field select {
+	border: 1px solid CornflowerBlue;
+	padding: 10px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	font-size: 12pt;
+	text-align: right;
+}
+
+.field textarea {
+	text-align: left !important;
+}
+
+.actions {
+	margin-left: 130px;
+	padding: 3px;
+}
+
+.column {
+	float: left;
+	margin: auto;
+	margin-right: 25px;
+}
+
+.leftAlign {
+	text-align: left !important;
+}
+
+/* teams */
+
+#summary {
+	float: left;
+	max-width: 250px;
+}
+
+#charts {
+	margin-left: 250px;
+}
+
+#velocityTrend, #efficiencyTrend, #processTrend, #teamSizeTrend, #testsTrend, #coverageTrend {
+	width: 100%;
+	height: 300px;
+}
+
+.clear {
+	clear: both;
+}
+
+.target {
+	font-family: 'Raleway', cursive;
+	font-size: 48px;
+	color: CornflowerBlue;
+	text-transform: lowercase;
+	text-align: center;
+	height: 60px;
+}
+
+.teamHeading, .teamHeading td {
+	border: none;
+	padding: 10px;
+}
+
+.ok {
+	
+}
+
+.poor {
+	color: red;
+}
+
