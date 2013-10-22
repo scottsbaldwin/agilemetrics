@@ -254,7 +254,10 @@ module SprintsHelper
 	end
 
 	def velocity_index(sprint, first_sprint)
-		idx = sprint.actual_velocity / first_sprint.actual_velocity
+		idx = 0
+		if sprint.actual_velocity && first_sprint.actual_velocity
+			idx = sprint.actual_velocity / first_sprint.actual_velocity
+		end
 		idx.round(2)
 	end
 
