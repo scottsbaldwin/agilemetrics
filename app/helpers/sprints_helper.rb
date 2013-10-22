@@ -13,7 +13,7 @@ module SprintsHelper
 	def points_per_person_day(sprint)
 		man_days_denominator = man_days(sprint)
 		metric = 0
-		if man_days_denominator != 0
+		if man_days_denominator != 0 && sprint.actual_velocity
 			metric = sprint.actual_velocity / man_days_denominator
 		end
 		metric
