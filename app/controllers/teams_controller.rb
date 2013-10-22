@@ -1,6 +1,7 @@
 class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update, :destroy]
   include SprintsHelper
+  include ForecastHelper
 
   def index
     @teams = Team.order("UPPER(name) asc")
@@ -85,6 +86,19 @@ class TeamsController < ApplicationController
     end
   end
 
+  def forecast
+    @team = Team.find(params[:team_id])
+    acct = @team.trello_account
+    proxy = TrelloProxy.create(acct[:public_key], acct[:read_token], acct[:board_id])
+    board = proxy.board
+    l = board.list_starts_with acct[:list_name_for_backlog]
+    full_cards = l.cards(filter: :open)
+    cards = process_cards(full_cards)
+    respond_to do |format|
+      format.json { render json: cards }
+    end
+  end
+
   private
 
   def set_team
@@ -93,5 +107,12 @@ class TeamsController < ApplicationController
 
   def team_params
     params.require(:team).permit(:name, :sprint_weeks, :owners, :is_archived, :test_certification, trello_account_attributes: [:public_key, :read_token, :board_id, :list_name_for_backlog])
+  end
+
+  def process_cards(full_cards)
+    cards = full_cards.map do |c|
+      { name: c.name, url: c.url, estimate: size_of_card(c) }
+    end
+    cards
   end
 end

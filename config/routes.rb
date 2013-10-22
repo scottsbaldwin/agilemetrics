@@ -3,6 +3,7 @@ Agilemetrics::Application.routes.draw do
 
   resources :teams do
 	resources :sprints
+	match :forecast, to: 'teams#forecast', as: "forecast", via: :post
   end
 
   match 'averages', to: 'teams#averages', as: "team_averages", via: :get

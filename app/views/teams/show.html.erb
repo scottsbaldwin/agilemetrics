@@ -26,3 +26,7 @@
 <p><%= link_to "add a sprint", new_team_sprint_path(@team), :class => "button"  %></p>
 <% end -%>
 <%= render "teams/sprintlist" %>
+
+<% if @team.can_forecast? -%>
+<%= render "teams/forecast" %>
+<% end -%>

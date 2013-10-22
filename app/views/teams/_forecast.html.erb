@@ -1,0 +1,162 @@
+<h2>backlog forecast</h2>
+<script>
+var DEFAULT_ESTIMATE = 13;
+var cards = [];
+function getCardsFromTrello() {
+	var url = "<%= team_forecast_path(@team) %>";
+	$('#btn').attr("disabled","disabled");
+	toggleLoadingIndicator();
+	$.ajax({
+		url: url,
+		beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+		dataType: "json",
+		complete: function() {
+			toggleLoadingIndicator();
+			$('#btn').removeAttr("disabled");
+		},
+		error: function (xhr, status, err) {
+			setError('Something went wrong: ' + err);
+		},
+		success: function(result) {
+			cards = result;
+			renderCards();
+		},
+		type: 'POST'
+	});
+}
+
+function loadCards() {
+	if (cards.length == 0) {
+		getCardsFromTrello();
+	} else {
+		renderCards();
+	}
+}
+
+function toggleLoadingIndicator() {
+	$('#loading').toggle();
+}
+
+function getVelocity() {
+	return $('#velocity').val();
+}
+
+function runForecast() {
+	clearError();
+	var velocity = getVelocity();
+	if (velocity == null || !$.isNumeric(velocity) || velocity <= 0) {
+		setError('Please enter a valid velocity');
+		return 0;
+	}
+	loadCards();
+}
+
+function renderCards() {
+	var velocity = getVelocity();
+	if (cards.length == 0) {
+		setError('Sorry, there are no cards to forecast with.');
+		return;
+	}
+
+	var buckets = [];
+	var currentBucket = getEmptyBucket();
+	buckets.push(currentBucket);
+
+	$(cards).each(function() {
+		var card = this;
+		var estimate = $.isNumeric(card.estimate) ? card.estimate : getDefaultEstimate();
+		console.log(card.estimate + ' :: ' + estimate);
+		if (currentBucket.plannedVelocity + estimate > velocity) {
+			// start a new bucket
+			currentBucket = getEmptyBucket();
+			buckets.push(currentBucket);
+		}
+
+		var li = document.createElement('li');
+		var link = document.createElement('a');
+		link.setAttribute("href", card.url);
+		link.appendChild(document.createTextNode(card.name));
+		li.appendChild(link);
+		currentBucket.list.appendChild(li);
+		currentBucket.plannedVelocity += estimate;
+	});
+
+	$('#cards').empty();
+	$(buckets).each(function(index, bucket) {
+		bucket.weekOffset = index + 1;
+		bucket.name = createBucketName(bucket.weekOffset);
+		renderBucket(bucket);
+	});
+}
+
+function createBucketName(weekOffset) {
+	return "Sprint Ending " + getDateOfSprintFromOffset(weekOffset);
+}
+
+function renderBucket(bucket) {
+	var container = document.createElement('div');
+	container.setAttribute('class', 'bucket');
+	var heading = document.createElement('h2');
+	heading.appendChild(document.createTextNode(bucket.name));
+	$(container).append(heading);
+	$(container).append(bucket.list);
+	$('#cards').append(container);
+}
+
+function getEmptyBucket() {
+	return { name: "Future Sprint", list: document.createElement('ol'), plannedVelocity: 0, weekOffset: 1 };
+}
+
+function setError(msg) {
+	$('#error').html(msg);
+}
+
+function clearError() {
+	$('#error').empty();
+}
+
+function getDefaultEstimate() {
+	var de = $('#defaultEstimate').val();
+	if (!$.isNumeric(de)) {
+		de = DEFAULT_ESTIMATE;
+	} else {
+		de -= 0;
+	}
+	return de;
+}
+
+function getDateOfSprintFromOffset(weekOffset) {
+	var referenceDate = new Date();
+	var dayOfWeek = referenceDate.getDay();
+	while (dayOfWeek != 4) {
+		referenceDate.setDate(referenceDate.getDate() + 1);
+		dayOfWeek = referenceDate.getDay();
+	}
+	referenceDate.setDate(referenceDate.getDate() + (weekOffset * 7));
+	return referenceDate.toDateString();
+}
+
+$(document).ready(function() {
+	$('#defaultEstimate').val(DEFAULT_ESTIMATE);
+});
+</script>
+<div class="field">
+	<label for="velocity">Target velocity</label>
+	<input type="text" id="velocity" placeholder="Target velocity" value="<%= average_velocity(@averages_set) %>"/>
+	<a rel="tooltip" class="nolink circleButton" title="The velocity used to forecast each upcoming sprint">?</a>
+</div>
+
+<div class="field">
+	<label for="defaultEstimate">Default estimate</label>
+	<input type="text" id="defaultEstimate" />
+	<a rel="tooltip" class="nolink circleButton" title="An estimate to use for story cards that don't have an estimate.">?</a>
+</div>
+
+<div class="actions">
+	<input type="button" onclick="runForecast();" value="Forecast!" id="btn" class="button" />
+	<div id="error"></div>
+	<div id="loading" style="display:none;">Loading cards from Trello...</div>
+</div>
+
+<div id="cards">
+</div>

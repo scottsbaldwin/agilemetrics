@@ -9,6 +9,7 @@ gem 'jquery-rails'
 gem 'pg'
 gem 'devise'
 gem 'jbuilder', '~> 1.2'
+gem 'ruby-trello'
 
 group :doc do
   gem 'sdoc', require: false
