@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131021202645) do
+ActiveRecord::Schema.define(version: 20131023210206) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,8 +45,9 @@ ActiveRecord::Schema.define(version: 20131021202645) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "owners"
-    t.boolean  "is_archived",        default: false
-    t.integer  "test_certification", default: 0
+    t.boolean  "is_archived",              default: false
+    t.integer  "test_certification",       default: 0
+    t.integer  "day_of_week_for_meetings", default: 5
   end
 
   add_index "teams", ["name"], name: "index_teams_on_name", unique: true, using: :btree

@@ -106,7 +106,7 @@ class TeamsController < ApplicationController
   end
 
   def team_params
-    params.require(:team).permit(:name, :sprint_weeks, :owners, :is_archived, :test_certification, trello_account_attributes: [:public_key, :read_token, :board_id, :list_name_for_backlog])
+    params.require(:team).permit(:name, :sprint_weeks, :owners, :is_archived, :test_certification, :day_of_week_for_meetings, trello_account_attributes: [:public_key, :read_token, :board_id, :list_name_for_backlog])
   end
 
   def process_cards(full_cards)

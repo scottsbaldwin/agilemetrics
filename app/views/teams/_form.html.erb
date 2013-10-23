@@ -29,6 +29,19 @@
     <%= f.label :is_archived %>
     <%= f.check_box :is_archived %>
   </div>
+  <div class="field">
+    <%= f.label :day_of_week_for_meetings %>
+	<%
+	    days = [
+	      ["Monday", 1],
+	      ["Tuesday", 2],
+	      ["Wendesday", 3],
+	      ["Thursday", 4],
+	      ["Friday", 5]
+	]
+	-%>
+	<%= f.select :day_of_week_for_meetings, days %>
+  </div>
   <% if user_signed_in? && is_super_admin?(current_user.login) -%>
   <div class="field">
     <%= f.label :test_certification %>
