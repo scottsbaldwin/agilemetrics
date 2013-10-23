@@ -2,7 +2,7 @@
 <script>
 var DEFAULT_ESTIMATE = 13;
 var cards = [];
-function getCardsFromTrello() {
+function getCardsFromTrello(callback) {
 	var url = "<%= team_forecast_path(@team) %>";
 	$('#btn').attr("disabled","disabled");
 	toggleLoadingIndicator();
@@ -19,17 +19,17 @@ function getCardsFromTrello() {
 		},
 		success: function(result) {
 			cards = result;
-			renderCards();
+			callback();
 		},
 		type: 'POST'
 	});
 }
 
-function loadCards() {
+function loadCards(callback) {
 	if (cards.length == 0) {
-		getCardsFromTrello();
+		getCardsFromTrello(callback);
 	} else {
-		renderCards();
+		callback();
 	}
 }
 
@@ -41,6 +41,34 @@ function getVelocity() {
 	return $('#velocity').val();
 }
 
+function getUnsizedCards() {
+	clearError();
+	loadCards(renderUnsizedCards);
+}
+
+function renderUnsizedCards() {
+	if (cards.length == 0) {
+		setError('Sorry, there are no unsized cards.');
+		return;
+	}
+	var currentBucket = getEmptyBucket();
+	currentBucket.name = "Unsized Cards";
+	$('#cards').empty();
+	var pattern = /^\((\d+\.?\d*)\)/;
+	$(cards).each(function() {
+		var card = this;
+		if (!pattern.test(card.name)) {
+			var li = document.createElement('li');
+			var link = document.createElement('a');
+			link.setAttribute("href", card.url);
+			link.appendChild(document.createTextNode(card.name));
+			li.appendChild(link);
+			currentBucket.list.appendChild(li);
+		}
+	});
+	renderBucket(currentBucket);
+}
+
 function runForecast() {
 	clearError();
 	var velocity = getVelocity();
@@ -48,10 +76,10 @@ function runForecast() {
 		setError('Please enter a valid velocity');
 		return 0;
 	}
-	loadCards();
+	loadCards(renderForecast);
 }
 
-function renderCards() {
+function renderForecast() {
 	var velocity = getVelocity();
 	if (cards.length == 0) {
 		setError('Sorry, there are no cards to forecast with.');
@@ -154,6 +182,7 @@ $(document).ready(function() {
 
 <div class="actions">
 	<input type="button" onclick="runForecast();" value="Forecast" id="btn" class="button" />
+	<input type="button" onclick="getUnsizedCards();" value="Get Unsized Cards" id="btn" class="button" />
 	<div id="error"></div>
 	<div id="loading" style="display:none;">Loading cards from Trello...</div>
 </div>
