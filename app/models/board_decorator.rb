@@ -1,3 +1,4 @@
+# Wrapper for a Trello Board to provide additional functionality
 require 'trello'
 
 class BoardDecorator
@@ -35,7 +36,7 @@ class BoardDecorator
   end
 
   def list_starts_with(prefix)
-    l = lists.select { |k,v| v.name =~ /^#{prefix}/i }
+    l = lists.select { |k, v| v.name =~ /^#{prefix}/i }
     l[l.keys.first]
   end
 
@@ -47,15 +48,13 @@ class BoardDecorator
   end
 
   def average_lead_time
-    puts "Calculating average lead time for this board"
     times = []
     lists.each do |list_id, list|
-      puts "Collecting card ages from the \"#{list.name}\" list..."
-      done_or_closed_cards = list.cards.select { |c| c.timeline.done? || c.timeline.closed? }
+      done_or_closed_cards = list.cards.select do |c|
+        c.timeline.done? || c.timeline.closed?
+      end
       times.concat done_or_closed_cards.map { |c| c.timeline.age_in_seconds }
     end
-
-    puts "Performing arithmetic..."
     puts "Average lead time: #{humanize_seconds(average(times))}"
   end
 
@@ -64,7 +63,7 @@ class BoardDecorator
   def average(values)
     avg = 0.0
     if values.size > 0
-      avg = (values.inject(0.0) { |sum, el| sum += el } / values.size).round(0)
+      avg = (values.reduce(0.0) { |a, e| a + e } / values.size).round(0)
     end
     avg
   end
