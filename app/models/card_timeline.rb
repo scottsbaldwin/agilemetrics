@@ -1,3 +1,4 @@
+# Age helper for the actions on a card
 class CardTimeline
   include TimeHumanizerHelper
 
@@ -34,7 +35,9 @@ class CardTimeline
   end
 
   def closed_date
-    action = @actions.detect {|a| a.type =~ /updateCard/i && a.data["old"].has_key?("closed")}
+    action = @actions.find do |a|
+      a.type =~ /updateCard/i && a.data['old'].key?('closed')
+    end
     action ? action.date : nil
   end
 
@@ -46,14 +49,7 @@ class CardTimeline
     if @_age
       @_age
     else
-      seconds = 0
-      if done?
-        seconds = calculate_age_in_seconds(creation_date, done_date)
-      elsif closed?
-        seconds = calculate_age_in_seconds(creation_date, closed_date)
-      elsif creation_date
-        seconds = calculate_age_in_seconds(creation_date, Time.now)
-      end
+      seconds = determine_age_from_status
       @_age ||= seconds
     end
   end
@@ -63,7 +59,11 @@ class CardTimeline
   end
 
   def time_in_list(list_id)
-    @_seconds_in_list.has_key?(list_id) ? @_seconds_in_list[list_id][:seconds_in_list] : 0
+    if @_seconds_in_list.key?(list_id)
+      @_seconds_in_list[list_id][:seconds_in_list]
+    else
+      0
+    end
   end
 
   private
@@ -72,18 +72,17 @@ class CardTimeline
     @_seconds_in_list = {}
 
     # walk the actions and build an easier data structure to work with
-    events = []
     @actions.reverse.each_with_index do |action, index|
       before_list = list_before_current_index(index)
       after_list = list_from_result_of_action(action)
       seconds = time_since_last_action(index)
 
-      list_identifier = before_list["id"]
+      list_identifier = before_list['id']
       if list_identifier
-        if !@_seconds_in_list.has_key?(list_identifier)
+        unless @_seconds_in_list.key?(list_identifier)
           @_seconds_in_list[list_identifier] = {
-            list_id: before_list["id"],
-            list_name: before_list["name"],
+            list_id: before_list['id'],
+            list_name: before_list['name'],
             seconds_in_list: 0
           }
         end
@@ -94,11 +93,11 @@ class CardTimeline
         # we won't have an after_list if the card was closed after being
         # created and left in a single list
         if after_list
-          list_identifier = after_list["id"]
-          if !@_seconds_in_list.has_key?(list_identifier)
+          list_identifier = after_list['id']
+          unless @_seconds_in_list.key?(list_identifier)
             @_seconds_in_list[list_identifier] = {
-              list_id: after_list["id"],
-              list_name: after_list["name"],
+              list_id: after_list['id'],
+              list_name: after_list['name'],
               seconds_in_list: 0
             }
           end
@@ -115,14 +114,13 @@ class CardTimeline
         end
       end
 
-
     end
 
   end
 
   def list_before_current_index(current_index)
     if current_index == 0
-      "?"
+      '?'
     else
       list = nil
       current_index.downto(1) do |i|
@@ -134,10 +132,12 @@ class CardTimeline
   end
 
   def list_from_result_of_action(action)
-    if action.type == "createCard"
-      action.data["list"]
-    elsif action.type == "updateCard" && action.data.has_key?("old") && action.data["old"].has_key?("idList")
-      action.data["listAfter"]
+    if action.type == 'createCard'
+      action.data['list']
+    elsif action.type == 'updateCard' &&
+      action.data.key?('old') &&
+      action.data['old'].key?('idList')
+      action.data['listAfter']
     end
   end
 
@@ -153,20 +153,36 @@ class CardTimeline
   end
 
   def last_done_action
-    @_last_done_action = @actions.detect { |a| a.type =~/updateCard/ && a.data.has_key?("listAfter") && a.data["listAfter"].has_key?("name") && a.data["listAfter"]["name"] =~ /Done/i }
+    @_last_done_action = @actions.find do |a|
+      a.type =~ /updateCard/ && a.data.key?('listAfter') &&
+      a.data['listAfter'].key?('name') &&
+      a.data['listAfter']['name'] =~ /Done/i
+    end
+  end
+
+  def determine_age_from_status
+    seconds = 0
+    if done?
+      seconds = calculate_age_in_seconds(creation_date, done_date)
+    elsif closed?
+      seconds = calculate_age_in_seconds(creation_date, closed_date)
+    elsif creation_date
+      seconds = calculate_age_in_seconds(creation_date, Time.now)
+    end
+    seconds
   end
 
   def calculate_age_in_seconds(start_time, end_time)
     (end_time - start_time).round(0)
   end
 
-  def age_in_hours seconds
+  def age_in_hours(seconds)
     minute = 60
     hour = 60 * minute
     seconds / hour
   end
 
-  def age_in_days seconds
+  def age_in_days(seconds)
     minute = 60
     hour = 60 * minute
     day = 24 * hour
