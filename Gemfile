@@ -16,6 +16,7 @@ group :doc do
 end
 
 group :development, :test do
+  gem 'rubocop'
   gem 'rspec'
   gem 'shoulda'
   gem 'pry'

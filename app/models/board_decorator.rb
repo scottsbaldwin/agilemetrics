@@ -1,6 +1,7 @@
 # Wrapper for a Trello Board to provide additional functionality
 require 'trello'
 
+# Wraps the Trello lib's Board object
 class BoardDecorator
   include Trello
   include TimeHumanizerHelper
