@@ -21,7 +21,7 @@ group :development, :test do
   gem 'shoulda'
   gem 'pry'
   gem 'pry-rails'
-  gem 'pry-debugger'
+  gem 'pry-byebug'
 end
 
 gem 'rails_12factor', group: :production
