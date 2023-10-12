@@ -1,0 +1,26 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: db
+  username: postgres
+  password:
+  pool: 5
+
+development:
+  <<: *default
+  database: metrics_dev
+  host: 127.0.0.1
+  password: badwolf
+
+test:
+  <<: *default
+  database: metrics_test
+  host: 127.0.0.1
+  password: badwolf
+    
+production:
+  <<: *default
+  database: metrics_prod
+  host: <%= ENV['METRICS_DB_HOST'] %>
+  password: <%= ENV['METRICS_DB_PASS'] %>
+  port: 5432

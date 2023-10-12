@@ -1,0 +1,27 @@
+	<tr>
+	<td><%= link_to sprint.sprint_name, team_sprint_path(sprint.team, sprint) %></td>
+	<td><%= sprint.end_date %></td>
+	<td class="alignNumber"><%= sprint.team_size %></td>
+	<td class="alignNumber"><%= sprint.working_days %></td>
+	<td class="alignNumber"><%= sprint.pto_days %></td>
+	<td class="alignNumber effectiveTeamSize"><%= effective_team_size(sprint) %></td>
+
+	<td class="alignNumber"><%= sprint.planned_velocity %></td>
+	<td class="alignNumber"><%= sprint.actual_velocity %></td>
+	<td class="alignNumber"><%= sprint.adopted_points %></td>
+	<td class="alignNumber"><%= sprint.unplanned_points %></td>
+	<td class="alignNumber"><%= sprint.found_points %></td>
+	<td class="alignNumber"><%= sprint.partial_points %></td>
+
+	<!--
+	<td class="alignNumber"><%= sprint.code_coverage %></td>
+	<td class="alignNumber"><%= sprint.nr_manual_tests %></td>
+	<td class="alignNumber"><%= sprint.nr_automated_tests %></td>
+	-->
+
+    <td<%= ' colspan="3"' if !is_username_an_owner_of_team?(current_user.login, @team) -%> style="text-align:center"><%= link_to 'show', team_sprint_path(sprint.team, sprint) %></td>
+	<% if is_username_an_owner_of_team?(current_user.login, @team) -%>
+    	<td style="text-align:center"><%= link_to 'edit', edit_team_sprint_path(sprint.team, sprint) %></td>
+		<td style="text-align:center"><%= link_to "delete", [sprint.team, sprint], :confirm => "Are you sure you want to delete #{sprint.sprint_name}?", :method => :delete %></td>
+	<% end -%>
+	</tr>

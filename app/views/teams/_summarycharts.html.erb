@@ -1,0 +1,39 @@
+<h2>summary</h2>
+<div id="summary">
+	<%= render "sprints/summary" %>
+</div>
+<div id="charts">
+<% last_sprints = last_n_sprints(@team.sprints, 10) %>
+<% if last_sprints.size > 0 %>
+    <script type="text/javascript">
+      function drawVisualization() {
+
+		<%= render :partial => "chartdefvelocitytrend", :locals => { :last_sprints => last_sprints } %>
+		<%= render :partial => "chartdefefficiencytrend", :locals => { :last_sprints => last_sprints } %>
+		<%= render :partial => "chartdefprocesstrend", :locals => { :last_sprints => last_sprints } %>
+		<%= render :partial => "chartdefteamsize", :locals => { :last_sprints => last_sprints } %>
+		<%# render :partial => "chartdeftests", :locals => { :last_sprints => last_sprints } %>
+		<%# render :partial => "chartdefcoverage", :locals => { :last_sprints => last_sprints } %>
+
+      }
+      google.setOnLoadCallback(drawVisualization);
+    </script>
+	<table width="100%">
+		<tr>
+		<td width="50%"><div id="velocityTrend"></div></td>
+		<td width="50%"><div id="efficiencyTrend"></div></td>
+		</tr>
+		<tr>
+		<td width="50%"><div id="processTrend"></div></td>
+		<td width="50%"><div id="teamSizeTrend"></div></td>
+		</tr>
+		<!--
+		<tr>
+		<td width="50%"><div id="testsTrend"></div></td>
+		<td width="50%"><div id="coverageTrend"></div></td>
+		</tr>
+		-->
+	</table>
+<% end %>
+</div>
+<div class="clear"></div>

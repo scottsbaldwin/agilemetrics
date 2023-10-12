@@ -1,0 +1,102 @@
+<%= form_for([@sprint.team, @sprint]) do |f| %>
+  <% if @sprint.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@team.errors.count, "error") %> prohibited this sprint from being saved:</h2>
+
+      <ul>
+      <% @sprint.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+	<h2>Sprint Info</h2>
+
+  <div class="field">
+    <%= f.label :sprint_name %>
+    <%= f.text_field :sprint_name %>
+	Tip: Use format yyyy.mm.dd for easy sorting
+  </div>
+  <div class="field">
+    <%= f.label :end_date %>
+    <%= f.text_field :end_date %>
+	format: yyyy-mm-dd
+  </div>
+  <div class="field">
+    <%= f.label :team_size %>
+    <%= f.text_field :team_size %>
+	<a rel="tooltip" class="nolink circleButton" title="<%= render "sprints/tipteamsize" %>">?</a>
+  </div>
+  <div class="field">
+    <%= f.label :working_days %>
+    <%= f.text_field :working_days %>
+	<a rel="tooltip" class="nolink circleButton" title="<%= render "sprints/tipworkingdays" %>">?</a>
+  </div>
+  <div class="field">
+    <%= f.label "Out of office days" %>
+    <%= f.text_field :pto_days %>
+	<a rel="tooltip" class="nolink circleButton" title="<%= render "sprints/tipptodays" %>">?</a>
+  </div>
+
+	<h2>Actuals</h2>
+
+  <div class="field" style="width: 100%">
+	<%= f.label :planned_velocity %>
+    <%= f.text_field :planned_velocity %>
+	<a rel="tooltip" class="nolink circleButton" title="<%= render "sprints/tipplanned" %>">?</a>
+  </div>
+  <div class="field">
+    <%= f.label :actual_velocity %>
+    <%= f.text_field :actual_velocity %>
+	<a rel="tooltip" class="nolink circleButton" title="<%= render "sprints/tipactualvelocity" %>">?</a>
+  </div>
+  <div class="field">
+    <%= f.label :adopted_points %>
+    <%= f.text_field :adopted_points %>
+	<a rel="tooltip" class="nolink circleButton" title="<%= render "sprints/tipadopted" %>">?</a>
+  </div>
+  <div class="field">
+    <%= f.label :unplanned_points %>
+    <%= f.text_field :unplanned_points %>
+	<a rel="tooltip" class="nolink circleButton" title="<%= render "sprints/tipunplanned" %>">?</a>
+  </div>
+  <div class="field">
+    <%= f.label :found_points %>
+    <%= f.text_field :found_points %>
+	<a rel="tooltip" class="nolink circleButton" title="<%= render "sprints/tipfound" %>">?</a>
+  </div>
+  <div class="field">
+    <%= f.label :partial_points %>
+    <%= f.text_field :partial_points %>
+	<a rel="tooltip" class="nolink circleButton" title="<%= render "sprints/tippartial" %>">?</a>
+  </div>
+  <!--
+	<h2>Tests</h2>
+
+  <div class="field">
+    <%= f.label :code_coverage %>
+    <%= f.number_field :code_coverage, :max => 100, :step => 0.1 %>
+	e.g. 33.5 means 33.5%
+  </div>
+
+  <div class="field">
+    <%= f.label "Number of Manual Tests" %>
+    <%= f.number_field :nr_manual_tests, :min => 0 %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Number of Automated Tests" %>
+    <%= f.number_field :nr_automated_tests, :min => 0 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :note %>
+    <%= f.text_area :note %>
+  </div>
+  -->
+
+  <div class="actions">
+    <%= f.submit "Submit", :class => 'button large green' %>
+  </div>
+<% end %>

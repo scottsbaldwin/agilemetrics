@@ -1,0 +1,39 @@
+<% if @team.sprints.size > 0 %>
+<table class="sprints">
+<thead>
+<tr>
+<th class="sprintInfo" colspan="6">Sprint Info</th>
+<th class="actuals" colspan="6">Actuals</th>
+<!--
+<th class="tests" colspan="3">Tests</th>
+-->
+<th rowspan="2" colspan="3">Actions</th>
+</tr>
+
+<tr>
+<th class="sprintInfo">Name</th>
+<th class="sprintInfo">End Date</th>
+<th class="sprintInfo">Team Size<a rel="tooltip" class="nolink circleButtonSmall" title="<%= render "sprints/tipteamsize" %>">?</a></th>
+<th class="sprintInfo">Working Days<a rel="tooltip" class="nolink circleButtonSmall" title="<%= render "sprints/tipworkingdays" %>">?</a></th>
+<th class="sprintInfo">PTO/OOO Days<a rel="tooltip" class="nolink circleButtonSmall" title="<%= render "sprints/tipptodays" %>">?</a></th>
+<th class="sprintInfo">Effective Team Size<a rel="tooltip" class="nolink circleButtonSmall" title="<%= render "sprints/tipeffectiveteamsize" %>">?</a></th>
+
+<th class="actuals">Planned Velocity<a rel="tooltip" class="nolink circleButtonSmall" title="<%= render "sprints/tipplanned" %>">?</a></th>
+<th class="actuals">Actual Velocity<a rel="tooltip" class="nolink circleButtonSmall" title="<%= render "sprints/tipactualvelocity" %>">?</a></th>
+<th class="actuals">Adopted<a rel="tooltip" class="nolink circleButtonSmall" title="<%= render "sprints/tipadopted" %>">?</a></th>
+<th class="actuals">Unplanned<a rel="tooltip" class="nolink circleButtonSmall" title="<%= render "sprints/tipunplanned" %>">?</a></th>
+<th class="actuals">Found<a rel="tooltip" class="nolink circleButtonSmall" title="<%= render "sprints/tipfound" %>">?</a></th>
+<th class="actuals">Partial<a rel="tooltip" class="nolink circleButtonSmall" title="<%= render "sprints/tippartial" %>">?</a></th>
+
+<!--
+<th class="tests">Code Coverage</th>
+<th class="tests">Manual Tests</th>
+<th class="tests">Automated Tests</th>
+-->
+</tr>
+</thead>
+<tbody>
+<%= render @team.sprints.reverse %>
+</tbody>
+</table>
+<% end %>

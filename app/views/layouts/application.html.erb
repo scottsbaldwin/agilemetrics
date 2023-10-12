@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>measure up :: <%= @team != nil ? @team.name : "your agile metrics" %></title>
+	<link href='http://fonts.googleapis.com/css?family=Raleway:100' rel='stylesheet' type='text/css'>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+      google.load('visualization', '1');
+    </script>
+</head>
+<body>
+<%
+username = 'User'
+if user_signed_in?
+  if !current_user.first_name.nil?
+    username = current_user.first_name
+  elsif !current_user.login.nil?
+    username = current_user.login
+  else
+    username = current_user.email
+  end
+end
+%>
+<div id="head">
+	<div id="thinstrip"></div>
+	<div id="sitename"><%= link_to "measure up", root_path %></div>
+	<div id="usernav">
+		<% if user_signed_in? %>
+		Hi, <%= link_to username, edit_user_registration_path %>! 
+	    <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete } %>
+		<% end %>
+	</div>
+</div>
+
+<div id="content">
+       <p class="alert"><%= alert %></p>
+       <p id="notice" class="notice"><%= notice %></p>
+<%= yield %>
+</div>
+
+<div id="foot">
+
+</div>
+</body>
+</html>

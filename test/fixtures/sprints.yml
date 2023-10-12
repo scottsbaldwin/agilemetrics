@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  sprint_name: MyString
+  end_date: 2012-01-24
+  team_size: 1.5
+  working_days: 1.5
+  pto_days: 1.5
+  planned_velocity: 1.5
+  actual_velocity: 1.5
+  adopted_points: 1.5
+  unplanned_points: 1.5
+  found_points: 1.5
+  partial_points: 1.5
+
+two:
+  sprint_name: MyString
+  end_date: 2012-01-24
+  team_size: 1.5
+  working_days: 1.5
+  pto_days: 1.5
+  planned_velocity: 1.5
+  actual_velocity: 1.5
+  adopted_points: 1.5
+  unplanned_points: 1.5
+  found_points: 1.5
+  partial_points: 1.5

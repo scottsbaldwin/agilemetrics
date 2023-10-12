@@ -1,0 +1,83 @@
+<%= form_for(@team) do |f| %>
+  <% if @team.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@team.errors.count, "error") %> prohibited this team from being saved:</h2>
+
+      <ul>
+      <% @team.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label "Sprint length" %>
+    <%= f.number_field :sprint_weeks, :in => 1..2 %>
+	(weeks)
+  </div>
+  <div class="field">
+    <%= f.label "Admins" %>
+    <%= f.text_field :owners %>
+	(login IDs of who can edit/delete the team)
+  </div>
+  <div class="field">
+    <%= f.label :is_archived %>
+    <%= f.check_box :is_archived %>
+  </div>
+  <div class="field">
+    <%= f.label :day_of_week_for_meetings %>
+	<%
+	    days = [
+	      ["Monday", 1],
+	      ["Tuesday", 2],
+	      ["Wednesday", 3],
+	      ["Thursday", 4],
+	      ["Friday", 5]
+	]
+	-%>
+	<%= f.select :day_of_week_for_meetings, days %>
+  </div>
+  <% if user_signed_in? && is_super_admin?(current_user.login) -%>
+  <div class="field">
+    <%= f.label :test_certification %>
+	<%
+		options = []
+		(0..5).to_a.each do |i|
+			options << ["Level #{i}", i]
+		end
+	-%>
+	<%= f.select :test_certification, options %>
+  </div>
+  <% end -%>
+
+  <%= f.fields_for :trello_account do |trello_form| %>
+    <div class="field">
+      <%= trello_form.label :public_key, "Trello public key" %>
+      <%= trello_form.text_field :public_key %>
+    </div>
+
+    <div class="field">
+      <%= trello_form.label :read_token, "Trello read token" %>
+      <%= trello_form.text_field :read_token %>
+    </div>
+
+    <div class="field">
+      <%= trello_form.label :board_id, "Trello board ID" %>
+      <%= trello_form.text_field :board_id %>
+    </div>
+
+    <div class="field">
+      <%= trello_form.label :list_name_for_backlog, "Trello backlog list name" %>
+      <%= trello_form.text_field :list_name_for_backlog %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit "Submit", :class => 'button large green' %>
+  </div>
+<% end %>

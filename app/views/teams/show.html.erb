@@ -1,0 +1,32 @@
+<table class="teamHeading">
+<tr style="vertical-align: top">
+<td><h1><%= @team.name %><%= @team.is_archived ? " (archived)" : "" -%></h1></td>
+<td style="text-align: center">test certification<br/><div><%= render :partial => "testcert", :locals => { :level => @team.test_certification, :width => 120 } %></div></td>
+<td style="text-align: center">sprint length<br/><strong><%= pluralize(@team.sprint_weeks, "week") %></strong></td>
+</tr>
+</table>
+
+<div>
+<% if is_username_an_owner_of_team?(current_user.login, @team) -%>
+	<%= link_to "edit #{@team.name}", edit_team_path(@team) %> |
+<% end -%>
+<%= link_to "back to teams", teams_path %>
+<% if @team.owners != nil && @team.owners != "" -%>
+| admin(s): <strong><%= @team.owners %></strong>
+<% end -%>
+</div>
+
+<% if @summary_sprint != nil %>
+<%= render "teams/summarycharts" %>
+<% end %>
+
+<h2>sprints</h2>
+<p>Tip: teams are ordered by name with the most recent at top of the list below. Name your sprints to fit alphabetically in the list.</p>
+<% if is_username_an_owner_of_team?(current_user.login, @team) -%>
+<p><%= link_to "add a sprint", new_team_sprint_path(@team), :class => "button"  %></p>
+<% end -%>
+<%= render "teams/sprintlist" %>
+
+<% if @team.can_forecast? -%>
+<%= render "teams/forecast" %>
+<% end -%>

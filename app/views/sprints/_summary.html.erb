@@ -1,0 +1,146 @@
+<%
+if @summary_sprint != nil
+%>
+<table>
+<thead>
+<tr>
+<th colspan="2"><%= @summary_sprint.sprint_name %></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a rel="tooltip" class="nolink" title="<%= render "sprints/tipplanned" %>">Planned</a></td>
+<td class="alignNumber"><%= @summary_sprint.planned_velocity %></td>
+</tr>
+
+<tr>
+<td><a rel="tooltip" class="nolink" title="<%= render "sprints/tipadopted" %>">Adopted</a></td>
+<td class="alignNumber"><%= @summary_sprint.adopted_points %></td>
+</tr>
+
+<tr>
+<td><a rel="tooltip" class="nolink" title="<%= render "sprints/tipfound" %>">Found</a></td>
+<td class="alignNumber"><%= @summary_sprint.found_points %></td>
+</tr>
+
+<tr>
+<td><a rel="tooltip" class="nolink" title="<%= render "sprints/tipunplanned" %>">Unplanned</a></td>
+<td class="alignNumber"><%= @summary_sprint.unplanned_points %></td>
+</tr>
+
+<tr>
+<td><a rel="tooltip" class="nolink" title="<%= render "sprints/tipcommittedvelocity" %>">Committed Velocity</a></td>
+<td class="alignNumber"><%= committed_velocity(@summary_sprint) %></td>
+</tr>
+
+<tr>
+<td><a rel="tooltip" class="nolink" title="<%= render "sprints/tipactualvelocity" %>">Actual Velocity</a></td>
+<td class="alignNumber"><%= @summary_sprint.actual_velocity %></td>
+</tr>
+
+<tr>
+<td><a rel="tooltip" class="nolink" title="<%= render "sprints/tipcapacity" %>">Capacity</a></td>
+<td class="alignNumber"><%= capacity(@summary_sprint) %></td>
+</tr>
+
+<tr>
+<td><a rel="tooltip" class="nolink" title="<%= render "sprints/tipfocusfactor" %>">Focus Factor</a></td>
+<td class="alignNumber"><%= number_to_percentage(focus_factor(@summary_sprint), :precision => 0) %></td>
+</tr>
+
+<tr>
+<td><a rel="tooltip" class="nolink" title="<%= render "sprints/tipcommitmentaccuracy" %>">Commitment Accuracy</a></td>
+<td class="alignNumber"><%= number_to_percentage(commitment_accuracy(@summary_sprint), :precision => 0) %></td>
+</tr>
+
+<tr>
+<td><a rel="tooltip" class="nolink" title="<%= render "sprints/tipestimationaccuracy" %>">Estimation Accuracy</a></td>
+<td class="alignNumber"><%= number_to_percentage(estimation_accuracy(@summary_sprint), :precision => 0) %></td>
+</tr>
+
+<tr>
+<td><a rel="tooltip" class="nolink" title="<%= render "sprints/tipunplannedwork" %>">Unplanned Work %</a></td>
+<td class="alignNumber"><%= number_to_percentage(unplanned_work_percent(@summary_sprint), :precision => 0) %></td>
+</tr>
+
+<tr>
+<td><a rel="tooltip" class="nolink" title="<%= render "sprints/tipvelocityefficiency" %>">Velocity Efficiency Factor</a></td>
+<td class="alignNumber"><%= velocity_efficiency(@summary_sprint, @first_sprint) %></td>
+</tr>
+
+<tr>
+<th colspan="2">Averages (Last 6 Sprints)</th>
+</tr>
+
+<tr>
+<td>Velocity</td>
+<td class="alignNumber"><%= average_velocity(@averages_set) %></td>
+</tr>
+
+<tr>
+<td><a rel="tooltip" class="nolink" title="<%= render "sprints/tipconfidence" %>">90% Confidence Interval</a></td>
+<td class="alignNumber"><%= confidence_interval(@averages_set) %></td>
+</tr>
+
+<tr>
+<td>Capacity</td>
+<td class="alignNumber"><%= average_capacity(@averages_set) %></td>
+</tr>
+
+<tr>
+<td>Focus Factor</td>
+<td class="alignNumber"><%= number_to_percentage(average_focus_factor(@averages_set), :precision => 0) %></td>
+</tr>
+
+<tr>
+<td>Commitment Accuracy</td>
+<td class="alignNumber"><%= number_to_percentage(average_commitment_accuracy(@averages_set), :precision => 0) %></td>
+</tr>
+
+<tr>
+<td>Estimation Accuracy</td>
+<td class="alignNumber"><%= number_to_percentage(average_estimation_accuracy(@averages_set), :precision => 0) %></td>
+</tr>
+
+<tr>
+<td>Unplanned Work %</td>
+<td class="alignNumber"><%= number_to_percentage(average_unplanned_work(@averages_set), :precision => 0) %></td>
+</tr>
+
+<tr>
+<td>Velocity Efficiency Factor</td>
+<td class="alignNumber"><%= average_velocity_efficiency(@averages_set, @first_sprint) %></td>
+</tr>
+</tbody>
+</table>
+
+<table style="margin-top: 15px; width: 100%">
+<thead>
+<tr>
+<th>
+<% if velocity_growth(@linear_regression).to_f > 0 -%>
+	to maintain your<br/>velocity trend, plan for
+<% else -%>
+	to stabilize the<br/>negative trend, plan for
+<% end -%>
+</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td class="target"><%= pluralize(next_velocity_in_trend(@linear_regression), "pt") %></td>
+</tr>
+
+<tr>
+<th>the velocity trend rate<br/>sprint over sprint is</th>
+</tr>
+
+<tr>
+<td class="target"><%= velocity_growth(@linear_regression) %></td>
+</tr>
+
+</tbody>
+</table>
+<% end %>
+
