@@ -9,7 +9,7 @@ default: &default
 development:
   <<: *default
   database: metrics_dev
-  host: 127.0.0.1
+  host: <%= ENV['METRICS_DB_HOST'] || '127.0.0.1' %>
   password: badwolf
 
 test:

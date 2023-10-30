@@ -6,6 +6,8 @@ Measure Up is an Agile metrics tracker for multiple teams. Use it to track per-s
 
 Measure Up is a Ruby on Rails app that uses Postgresql as the database back-end. Once you have Ruby installed, proceed with the instructions below.
 
+### Docker
+
 Run Postgres in a Docker container with:
 
 ```
@@ -35,3 +37,14 @@ rails s
 ```
 
 New users may register an account by clicking the "Sign up" link located at the bottom of the login page.
+
+### Kubernetes
+
+Use the k8s in Docker Desktop.
+
+```
+make local-install-helm
+make local-uninstall-helm
+```
+
+This app depends on a database running in docker. The hostname needs to be `host.docker.internal`, and is defined in `helm/values/devk8s.yaml` in the `deployment.env.METRICS_DB_HOST` value.

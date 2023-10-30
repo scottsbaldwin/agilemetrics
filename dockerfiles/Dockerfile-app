@@ -1,0 +1,24 @@
+ARG BASE_IMAGE=ruby:3.2
+ARG CACHE_IMAGE=${BASE_IMAGE}
+
+# Build stage for the gem cache
+FROM ${CACHE_IMAGE} AS gem-cache
+RUN mkdir -p /usr/local/bundle
+
+# Image with Bundler Installed
+FROM $BASE_IMAGE AS base
+RUN gem install bundler:2.4.10
+WORKDIR /app
+
+# Copy gems from a gem-cache build stage
+FROM base AS gems
+COPY --from=gem-cache /usr/local/bundle /usr/local/bundle
+COPY Gemfile Gemfile.lock ./
+RUN bundle install --jobs 4 --retry 3
+
+# Get the source code in place
+FROM base AS deploy
+COPY --from=gems /usr/local/bundle /usr/local/bundle
+CMD [ "rails", "server", "-b", "0.0.0.0" ]
+
+COPY . .
